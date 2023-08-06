@@ -65,23 +65,20 @@
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <i class='bx bx-x' ></i>
-                    </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a href="" class="nav-link text-uppercase nav-item-link menu-item-link" aria-current="page" href="#">Trang chủ</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-uppercase nav-item-link menu-item-link" aria-current="page" href="#">Giới thiệu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-uppercase nav-item-link menu-item-link" href="#">Sản phẩm</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-uppercase nav-item-link menu-item-link" href="#">Liên hệ</a>
-                        </li>
+                            <li class="nav-item">
+                                <a href="." class="nav-link text-uppercase nav-item-link menu-item-link" aria-current="page">Trang chủ</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase nav-item-link menu-item-link" aria-current="page" href="./html/introduction.html">Giới thiệu</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase nav-item-link menu-item-link" href="./html/products.html">Sản phẩm</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-uppercase nav-item-link menu-item-link" href="./html/contact.html">Liên hệ</a>
+                            </li>
                         </ul>
                     </div>
                     <form class="search-in-mobile">
@@ -452,6 +449,34 @@
     <footer class = "background_main">
         <span class = "text-center p-3">&copy;Copyright by letankim2003</span>
     </footer>
+    <div class="overlay"></div>
+    <div class="pop-up">
+      <i class='bx bxs-x-circle btn-close-pop-up' ></i>
+      <h3 class="title-pop-up">Đăng ký nhận tư vấn</h3>
+      <form class = "form-contact">
+        <div class="mb-3">
+            <label for="name" class="form-label">Họ tên: </label>
+            <input type="text" class="form-control" id="name" name = "Họ tên" placeholder="Họ tên">
+            <span class = "message_error"></span>
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Email: </label>
+          <input type="email" class="form-control" id="email"  name = "Email"  placeholder="Email">
+          <span class = "message_error"></span>
+        </div>
+        <div class="mb-3">
+          <label for="phone" class="form-label">Điện thoại: </label>
+          <input type="tel" class="form-control" id="phone" name = "Phone"  placeholder="Số điện thoại">
+          <span class = "message_error"></span>
+        </div>
+        <div class="mb-3 display-flex-column">
+            <label for="message" class="form-label">Tin nhắn: </label>
+            <textarea name="Tin nhắn" id="message" cols="30" rows="10"></textarea>
+            <span class = "message_error"></span>
+        </div>
+        <button type="submit" class="btn btn-primary btn-submit-contact">Submit</button>
+      </form>
+    </div>
     <script src="./assets/js/js_bootstrap/bootstrap.js"></script>
     <script src="./assets/js/js_bootstrap/bootstrap.min.js"></script>
     <script src="./assets/js/app.js"></script>

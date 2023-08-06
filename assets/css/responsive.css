@@ -35,6 +35,13 @@
         top:-3px; 
         right:10px;
     }
+    /* contact */
+    .maps {
+        width: 100%;
+    }
+    .pop-up {
+        width: 100%;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
@@ -45,6 +52,9 @@
         position: absolute;
         top:-3px; 
         right:10px;
+    }
+    .pop-up {
+        width: 100%;
     }
 }
 
