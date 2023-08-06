@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="./assets/css/css_bootstrap/bootstrap.css">
     <link rel="stylesheet" href="./assets/css/css_bootstrap/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/base.css">
@@ -12,36 +13,84 @@
 </head>
 <body>
     <header>
-        <div class="logo">
-            <img class="logo__image" src="./uploads/logo.jpg" alt="Logo">
-        </div>
-        <nav class="navbar navbar-expand-lg navbar-light background_main">
-            <div class="container">
-              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-              </button>
-              <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                  <li class="nav-item">
-                    <a href="" class="nav-link text-uppercase nav-item-link" aria-current="page" href="#">Trang chủ</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link text-uppercase nav-item-link" aria-current="page" href="#">Giới thiệu</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link text-uppercase nav-item-link" href="#">Sản phẩm</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link text-uppercase nav-item-link" href="#">Liên hệ</a>
-                  </li>
+        <div class="wrapper-info background_main">
+            <div class="container info-company">
+                <ul class="list-info-contact">
+                    <li class="item-info-contact">
+                        <i class='bx bx-location-plus'></i>
+                        Số 02 Hoa Phượng, P. 2, Q. Phú Nhuận, TP. HCM
+                    </li>
+                    <li class="item-info-contact">
+                        <i class='bx bx-phone'></i>
+                        0865341745
+                    </li>
                 </ul>
-                <form class="d-flex">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  <button class="btn btn-primary" type="submit">Search</button>
-                </form>
-              </div>
+                <ul class="list-info-contact-social">
+                    <li class="item-info-contact-social">
+                        <a href="" class="item-info-contact-social-link">
+                            <i class='bx bxl-facebook-circle' ></i>
+                        </a>
+                    </li>
+                    <li class="item-info-contact-social">
+                        <a href="" class="item-info-contact-social-link">
+                            <i class='bx bxl-twitter' ></i>
+                        </a>
+                    </li>
+                    <li class="item-info-contact-social">
+                        <a href="" class="item-info-contact-social-link">
+                            <i class='bx bxl-instagram' ></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
-        </nav>
+        </div>
+        <div class="header-login container">
+            <div class="logo">
+                <img class="logo__image" src="./uploads/logo.jpg" alt="Logo">
+            </div>
+            <div class="name-company">
+                <h1>công ty TNHH Dịch Vụ Kỹ thuật DOTESCO</h1>
+            </div>
+            <div class="auth">
+                <div class="wrapper-auth background_main">
+                    <a href="" class="btn login">Đăng nhập</a>
+                    <span class ="space">/</span>
+                    <a href="" class="btn sign-up">Đăng kí</a>
+                </div>
+            </div>
+        </div>
+        <div class="box-nav">
+            <nav class="navbar navbar-expand-lg navbar-light background_main">
+                <div class="container position-relative">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <i class='bx bx-x' ></i>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a href="" class="nav-link text-uppercase nav-item-link menu-item-link" aria-current="page" href="#">Trang chủ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-uppercase nav-item-link menu-item-link" aria-current="page" href="#">Giới thiệu</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-uppercase nav-item-link menu-item-link" href="#">Sản phẩm</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-uppercase nav-item-link menu-item-link" href="#">Liên hệ</a>
+                        </li>
+                        </ul>
+                    </div>
+                    <form class="search-in-mobile">
+                        <input class="input-search" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn-search" type="submit">Search</button>
+                    </form>
+                </div>
+            </nav>
+        </div>
     </header>
     <main>
         <section class = "container_banner container">
@@ -344,11 +393,11 @@
         <section class = "contact-section background_main">
             <div class="container">
                 <div class="row">
-                    <div class="introduction col-lg-4 col-sm-12 col-md-6 col-12">
+                    <div class="box-item-contact col-lg-4 col-sm-12 col-md-6 col-12">
                         <h2 class="contact-title">Giới thiệu</h2>
                         <p class="introduction-content">– Lĩnh vực hoạt động của Công Ty TNHH Thiết Bị Tiến Phát bao gồm: + Tư vấn trang bị thiết bị thành một phòng thí nghiệm hoàn chỉnh dùng cho giảng dạy, nghiên cứu, kiểm nghiệm, xét nghiệm,… + Cung cấp máy móc, thiết bị và vật tư</p>
                     </div>
-                    <div class="about-product col-lg-4 col-sm-12 col-md-6 col-12">
+                    <div class="box-item-contact col-lg-4 col-sm-12 col-md-6 col-12">
                         <h2 class="contact-title">Sản phẩm</h2>
                         <ul class="list_about-product">
                             <li class="item_about-product">
@@ -374,7 +423,7 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="about-us col-lg-4 col-sm-12 col-md-6 col-12">
+                    <div class="box-item-contact col-lg-4 col-sm-12 col-md-6 col-12">
                         <h2 class="contact-title">LIÊN HỆ VỚI CHÚNG TÔI</h2>
                         <div class="contact-us">
                             <p class="name_company text-uppercase m-0">
@@ -405,5 +454,6 @@
     </footer>
     <script src="./assets/js/js_bootstrap/bootstrap.js"></script>
     <script src="./assets/js/js_bootstrap/bootstrap.min.js"></script>
+    <script src="./assets/js/app.js"></script>
 </body>
 </html>
