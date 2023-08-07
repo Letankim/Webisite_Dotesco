@@ -86,7 +86,7 @@ const contactBtn = document.querySelectorAll('.contact_link'),
     popUp = document.querySelector('.pop-up'),
     closeBtn = document.querySelector(".btn-close-pop-up"),
     overlay = document.querySelector('.overlay');
-if(contactBtn) {
+if(popUp) {
     contactBtn.forEach(function(item) {
         item.addEventListener('click', function(e) {
             e.preventDefault();
