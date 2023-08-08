@@ -48,8 +48,20 @@
                                 </p>
                             </div>
                             <div class="form-group">
+                                <label for="status">Nổi bật: </label>
+                                <span class="show_more label label-warning">
+                                    <?php
+                                        if($currentProduct['priority'] == 1) {
+                                            echo "Sản phẩm đang ở chế độ ưu tiên";
+                                        } else  {
+                                            echo "Sản phẩm bình thường";
+                                        }
+                                    ?>
+                                </span>
+                            </div>
+                            <div class="form-group">
                                 <label for="status">Status: </label>
-                                <span class="show_more" style="color: red;">
+                                <span class="show_more label label-warning">
                                     <?php
                                         if($currentProduct['status'] == 1) {
                                             echo "Đang hoạt động";

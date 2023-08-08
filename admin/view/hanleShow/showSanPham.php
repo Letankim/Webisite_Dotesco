@@ -8,9 +8,13 @@
                 $nhaSanXuat = getNguonGocByID($item['idOrigin'])['name'];
                 $style = "background-color: #009da7;";
                 $messageStatus = "Đang hoạt động";
+                $messageFeatured = "Bình thường";
                 if($item['status'] == 0) {
                     $style = "background-color: #aab4b4";
                     $messageStatus = "Đang tắt";
+                }
+                if($item['priority'] == 1) {
+                    $messageFeatured = "Nổi bật";
                 }
                 $srcImg = PATH_UPLOADS.$item['img'];
                 $index++;
@@ -23,6 +27,7 @@
                 <td><img style='width: 70px;' src='".$srcImg ."'/></td>
                 <td>".$item['date']."</td>
                 <td> <span style = '$style' class='status-message'>$messageStatus</span></td>
+                <td> <span class='status-message label label-success'>$messageFeatured</span></td>
                 <td>
                     <a href='index.php?page=updateSanPham&id=".$item['id']."' alt='Chỉnh sửa'>
                         <i class='bx bx-edit-alt' style='color: green;'></i>

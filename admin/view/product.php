@@ -57,6 +57,14 @@
                     <textarea required name="desc" id="content_post" cols="30" rows="10"></textarea>
                 </div>
                 <div class="form-group">
+                    <label for="priority">Ưu tiên: </label>
+                    <select name="priority" id="priority">
+                        <option value="1">Sự ưu tiên</option>
+                        <option value="1">Ưu tiên</option>
+                        <option value="0">Bình thường</option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="status">Status</label>
                     <select name="status" id="status">
                         <option value="1">Trạng thái</option>
@@ -84,6 +92,10 @@
                   <option value="1">Đang hoạt động</option>
                   <option value="0">Đang tắt</option>
                 </select>
+                <select name="priority" class="input-sm form-control w-sm inline v-middle">
+                  <option value="1">Ưu tiên</option>
+                  <option value="0">Bình thường</option>
+                </select>
                 <button class="btn btn-sm btn-default" type="submit" name="filter">Lọc theo trạng thái</button>
              </form>                
           </div>
@@ -110,8 +122,9 @@
                   <th>Nhà sản xuất</th>
                   <th>Tên sản phẩm</th>
                   <th>Ảnh</th>
-                  <th>Ngày</th>
+                  <th>Ngày tạo</th>
                   <th>Trạng thái</th>
+                  <th>Nổi bật</th>
                   <th>Xử lí</th>
                   <th style="width:30px;"></th>
                 </tr>

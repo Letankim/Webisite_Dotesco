@@ -19,16 +19,16 @@ const messageName = "Tên phải chứa ít nhất 2 kí tự và nhiều nhất
 // array to save all input to check, message show error of each and a string regex to check 
 if(submitBtn) {
     const inputsToValidate = [
-        { element: name, message: messageName, regex: /^[a-zA-Z ]{2,30}$/},
-        { element: phone, message: messagePhone, regex: /^(0|\+84)[0-9]{9}$/},
-        { element: email, message: messageEmail, regex: /^[^\s@]+@[^\s@]+\.[^\s@]{2,4}$/},
-        { element: comment, message: messageComment, regex: /^.{20,}$/}
+        { element: name, error: "Tên" ,message: messageName, regex: /^.{2,30}$/},
+        { element: phone, error: "SĐT",message: messagePhone, regex: /^(0|\+84)[0-9]{9}$/},
+        { element: email, error: "Email",message: messageEmail, regex: /^[^\s@]+@[^\s@]+\.[^\s@]{2,4}$/},
+        { element: comment, error: "Tin nhắn",message: messageComment, regex: /^[\s\S]{20,}$/}
     ];
     
     // for each item in array input check when blur and when enter in input again clear show error
     inputsToValidate.forEach(function(item) {
         item.element.addEventListener('blur', function() {
-            checkInput(item.element, item.message, item.regex);
+            checkInput(item.element, item.message, item.regex, item.error);
         })
         item.element.addEventListener('input', function() {
             const parentNode = item.element.parentElement;
@@ -38,10 +38,10 @@ if(submitBtn) {
     
     // check error of element if no match with regex call function show error and return false
     // else return true and call function show success
-    function checkInput(ele, message, regex) {
+    function checkInput(ele, message, regex, error) {
         let messageError = '';
         if(ele.value.trim() == "") {
-            messageError = `${ele.name} là bắt buộc`;
+            messageError = `${error} là bắt buộc`;
         } else if(!ele.value.match(regex)) {
             messageError = message;
         } else {
@@ -71,7 +71,7 @@ if(submitBtn) {
     submitBtn.addEventListener('click', function(e) {
         let isValid = true;
         inputsToValidate.forEach(function(item) {
-            if(!checkInput(item.element, item.message, item.regex)){
+            if(!checkInput(item.element, item.message, item.regex, item.error)){
                 isValid = false;
             }
         })

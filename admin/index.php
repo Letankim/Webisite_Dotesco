@@ -13,14 +13,60 @@
         include_once "./model/nguongoc.php";
         include_once "./model/product.php";
         include_once "./model/account.php";
+        include_once "./model/banner.php";
+        include_once "./model/introduction.php";
         include_once "./view/header.php";
         include_once "./view/hanleShow/showDanhMuc.php";
         include_once "./view/hanleShow/showNguonGoc.php";
         include_once "./view/hanleShow/showSanPham.php";
         include_once "./view/hanleShow/showAccount.php";
-        connect();
+        include_once "./view/hanleShow/showBanner.php";
+        include_once "./view/hanleShow/showIntroduction.php";
         if(isset( $_GET['page']) &&  $_GET['page']) {
             switch( $_GET['page']) {
+                case 'introduction':
+                    $allIntroduction = getAllIntroduction();
+                    $pages = ceil(count($allIntroduction) / 20);
+                    $pageNumber = 1;
+                    if(isset($_GET['trang']) && $_GET['trang']) {
+                        $pageNumber = $_GET['trang'];
+                        $page = ($pageNumber - 1) * 20;
+                    } else {
+                        $page = 0;
+                    }
+                    $allIntroduction = devicePageIntroduction($page, 20);
+                    include_once "./view/introduction.php";
+                    break;
+                case 'addIntroduction':
+                    if(isset($_POST['addIntroduction'])) {
+                        $content = $_POST['introduction'];
+                        $status = $_POST['status'];
+                        addNewIntroduction($content, $status);
+                        header("Location: index.php?page=introduction");
+                    }
+                case 'updateIntroduction':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        $id = $_GET['id'];
+                        $currentIntroduction = getIntroductionByID($id);
+                        include_once "./view/editForm/editIntroduction.php";
+                    }
+                    break;
+                case 'updatedIntroduction':
+                    if(isset($_POST['updateIntroduction'])) {
+                        $id = $_POST['id'];
+                        $content = $_POST['introduction'];
+                        $status = $_POST['status'];
+                        updateIntroduction($id, $content, $status);
+                        header("Location: index.php?page=introduction");
+                    }
+                    break;
+                case 'deleteIntroduction':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        $id = $_GET['id'];
+                        deleteIntroduction($id);
+                        header("Location: index.php?page=introduction");
+                    }
+                    break;
                 case 'danhmuc':
                     $allCategory = getAllCategory();
                     $pages = ceil(count($allCategory) / 20);
@@ -164,6 +210,7 @@
                         $name = $_POST['name'];
                         $desc = $_POST['desc'];
                         $status = $_POST['status'];
+                        $priority = $_POST['priority'];
                         $target_dir = "../uploads/";
                         $target_file = $target_dir . basename($_FILES['mainImg']["name"]);
                         $uploadOk = 1;
@@ -175,7 +222,7 @@
                         if($uploadOk == 1) {
                             move_uploaded_file($_FILES['mainImg']["tmp_name"], $target_file);
                             $img = basename($_FILES['mainImg']["name"]);
-                            $last_id = addNewProduct($idDm,$idNG,$model,$name,$desc,$img,$status);
+                            $last_id = addNewProduct($idDm,$idNG,$model,$name,$desc,$img,$status, $priority);
                         }
                         // add anh mo ta
                         $filename = $_FILES['descImg']['name'];
@@ -217,6 +264,7 @@
                         $name = $_POST['name'];
                         $desc = $_POST['desc'];
                         $status = $_POST['status'];
+                        $priority = $_POST['priority'];
                         $mainImg = $_FILES['mainImg'];
                         if($mainImg["name"]) {
                             $currentPath = getProductByID($id)['img'];
@@ -228,7 +276,7 @@
                         } else {
                             $mainImg = "";
                         }
-                        updateProduct($idDm,$idNG,$model,$name,$desc,$mainImg,$status, $id);
+                        updateProduct($idDm,$idNG,$model,$name,$desc,$mainImg,$status, $id, $priority);
                         // add anh mo ta
                         if($_FILES['descImg']['name'][0] != "") {
                             deletePathInFile(getAllImgDescByIDProduct($id));
@@ -265,7 +313,8 @@
                 case 'filterBySanPham':
                     if(isset($_POST['filter'])) {
                         $status = $_POST['status'];
-                        $filterProduct = filterByProduct($status);
+                        $priority = $_POST['priority'];
+                        $filterProduct = filterByProduct($status, $priority);
                         include_once "./view/handleFilter/filterProduct.php";
                     }
                     break;
@@ -327,8 +376,6 @@
                 case 'deleteAccount':
                     if(isset($_GET['id']) && $_GET['id']) {
                         $id = $_GET['id'];
-                        $pathCurrent = getAccountByID($id)['avatar'];
-                        unlink(PATH_UPLOADS.$pathCurrent);
                         deleteAccount($id);
                     }
                     header("Location: index.php?page=account");
@@ -346,6 +393,74 @@
                         $status = $_POST['status'];
                         $filterAccount = filterByAccount($status);
                         include_once "./view/handleFilter/filterAccount.php";
+                    }
+                    break;
+                case 'banner':
+                    $allBanner = getAllBanner();
+                    $pages = ceil(count($allBanner) / 20);
+                    $pageNumber = 1;
+                    if(isset($_GET['trang']) && $_GET['trang']) {
+                        $pageNumber = $_GET['trang'];
+                        $page = ($pageNumber - 1) * 20;
+                    } else {
+                        $page = 0;
+                    }
+                    $message = "";
+                    if(isset($_GET['message']) && $_GET['message']) {
+                        $message = $_GET['message'];
+                    }
+                    $allBanner = devicePageBanner($page, 20);
+                    include_once "./view/banner.php";
+                    break;
+                case 'addBanner':
+                    if(isset($_POST['addBanner'])) {
+                        $status = $_POST['status'];
+                        $priority = $_POST['priority'];
+                        $imgBanner = $_FILES['imgBanner'];
+                        uploadImg($imgBanner);
+                        addNewBanner(basename($imgBanner["name"]),$status,$priority);
+                    }
+                    header("Location: index.php?page=banner");
+                    break;
+                case 'updateBanner':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        $id = $_GET['id'];
+                        $currentBanner = getBannerByID($id);
+                        include_once "./view/editForm/editBanner.php";
+                    }
+                    break;
+                case 'updatedBanner':
+                    if(isset($_POST['updateBanner'])) {
+                        $id = $_POST['id'];
+                        $status = $_POST['status'];
+                        $priority = $_POST['priority'];
+                        $img = "";
+                        $imgBanner = $_FILES['imgBanner'];
+                        if($imgBanner['name']) {
+                            $pathCurrent = getBannerByID($id)['img'];
+                            unlink(PATH_UPLOADS.$pathCurrent);
+                            uploadImg($imgBanner);
+                            $img = basename($imgBanner["name"]);
+                        } 
+                        updateBanner($id,$img,$status,$priority);
+                    }
+                    header("Location: index.php?page=banner");
+                    break;
+                case 'deleteBanner':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        $id = $_GET['id'];
+                        $pathCurrent = getBannerByID($id)['img'];
+                        unlink(PATH_UPLOADS.$pathCurrent);
+                        deleteBanner($id);
+                    }
+                    header("Location: index.php?page=banner");
+                    break;
+                case 'filterByBanner':
+                    if(isset($_POST['filter'])) {
+                        $status = $_POST['status'];
+                        $priority = $_POST['priority'];
+                        $filterBanner = filterByBanner($status, $priority);
+                        include "./view/handleFilter/filterBanner.php";
                     }
                     break;
                 case 'logout':

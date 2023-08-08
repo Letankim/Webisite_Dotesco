@@ -13,6 +13,10 @@
                   <option value="1">Đang hoạt động</option>
                   <option value="0">Đang tắt</option>
                 </select>
+                <select name="priority" class="input-sm form-control w-sm inline v-middle">
+                  <option value="1">Ưu tiên</option>
+                  <option value="0">Bình thường</option>
+                </select>
                 <button class="btn btn-sm btn-default" type="submit" name="filter">Lọc theo trạng thái</button>
              </form>                
           </div>
@@ -39,7 +43,7 @@
                   <th>Nhà sản xuất</th>
                   <th>Tên sản phẩm</th>
                   <th>Ảnh</th>
-                  <th>Ngày</th>
+                  <th>Ngày tạo</th>
                   <th>Trạng thái</th>
                   <th>Xử lí</th>
                   <th style="width:30px;"></th>

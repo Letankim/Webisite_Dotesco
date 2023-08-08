@@ -9,14 +9,14 @@
         return getAll($sql);
     }
 
-    function searchProduct($searchCategory) {
-        $searchCategory = validationInput($searchCategory);
-        $sql = "SELECT * FROM tbl_product WHERE name like '%".$searchCategory."%' ORDER BY id DESC";
+    function searchProduct($searchProduct) {
+        $searchProduct = validationInput($searchProduct);
+        $sql = "SELECT * FROM tbl_product WHERE name like '%".$searchProduct."%' ORDER BY id DESC";
         return getAll($sql);
     }
 
-    function filterByProduct($status) {
-        $sql = "SELECT * FROM tbl_product WHERE status=$status ORDER BY id DESC";
+    function filterByProduct($status, $priority) {
+        $sql = "SELECT * FROM tbl_product WHERE status=$status and priority = $priority ORDER BY id DESC";
         return getAll($sql);
     }
 
@@ -29,13 +29,13 @@
         $sql = "SELECT * FROM tbl_product WHERE id='$id'";
         return getByID($sql);
     }
-    function addNewProduct($iddm, $idNguonGoc, $model, $name, $desc, $mainImg ,$status) {
+    function addNewProduct($iddm, $idNguonGoc, $model, $name, $desc, $mainImg ,$status, $priority) {
         $conn = connect();
         $name = validationInput($name);
         $model = validationInput($model);
         $desc = validationInput($desc);
-        $sql = "INSERT INTO tbl_product (idCategory, idOrigin, modelID, name, description, img,status) 
-        VALUES ('$iddm', '$idNguonGoc','$model', '$name', '$desc','$mainImg', '$status')";
+        $sql = "INSERT INTO tbl_product (idCategory, idOrigin, modelID, name, description, img,status, priority) 
+        VALUES ('$iddm', '$idNguonGoc','$model', '$name', '$desc','$mainImg', '$status', '$priority')";
         $conn->exec($sql);
         return $conn->lastInsertId();
     }
@@ -45,17 +45,17 @@
         insert($sql);
     }
 
-    function updateProduct($iddm, $idNguonGoc, $model, $name, $desc, $mainImg ,$status, $id) {
+    function updateProduct($iddm, $idNguonGoc, $model, $name, $desc, $mainImg ,$status, $id, $priority) {
         $name = validationInput($name);
         $desc = validationInput($desc);
         $desc = validationInput($desc);
         if($mainImg!= "") {
             $sql = "UPDATE tbl_product SET idCategory='".$iddm."', idOrigin = '".$idNguonGoc."',modelID='".$model."',
-            name = '".$name."', description='".$desc."', img = '".$mainImg."', status='".$status."'
+            name = '".$name."', description='".$desc."', img = '".$mainImg."', status='".$status."', priority = '".$priority."'
             WHERE id=$id";
         } else {
             $sql = "UPDATE tbl_product SET idCategory='".$iddm."', idOrigin = '".$idNguonGoc."',modelID='".$model."',
-            name = '".$name."', description='".$desc."', status='".$status."'
+            name = '".$name."', description='".$desc."', status='".$status."', priority = '".$priority."'
             WHERE id=$id";
         }
         

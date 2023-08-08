@@ -41,7 +41,4 @@
         $sql = "DELETE FROM tbl_category WHERE id=$id";
         delete($sql);
     }
-
-    
-    
 ?>

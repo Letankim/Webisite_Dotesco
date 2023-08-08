@@ -4,9 +4,9 @@
         return getAll($sql);
     }
 
-    function searchNguonGoc($searchCategory) {
-        $searchCategory = validationInput($searchCategory);
-        $sql = "SELECT * FROM tbl_origin WHERE name like '%".$searchCategory."%' ORDER BY id DESC";
+    function searchNguonGoc($searchNguonGoc) {
+        $searchNguonGoc = validationInput($searchNguonGoc);
+        $sql = "SELECT * FROM tbl_origin WHERE name like '%".$searchNguonGoc."%' ORDER BY id DESC";
         return getAll($sql);
     }
 

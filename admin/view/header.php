@@ -46,7 +46,7 @@
             <!-- user login dropdown start-->
             <li class='dropdown'>
                 <a data-toggle='dropdown' class='dropdown-toggle' href='#'>
-                    <img alt='' src='./assets/images/2.png'>
+                    <img alt='' src='./assets/images/default-avatar-profile.jpg'>
                     <span class='username'><?=$_SESSION['usernameAdmin']?></span>
                     <b class='caret'></b>
                 </a>
@@ -71,6 +71,8 @@
                             <span>Trang chủ</span>
                         </a>
                     </li>
+                    <li><a href='index.php?page=introduction'>Giới thiệu về công ty</a></li>
+                    <li><a href='index.php?page=banner'>Banner</a></li>
                     <li><a href='index.php?page=danhmuc'>Danh mục</a></li>
                     <li><a href='index.php?page=nguongoc'>Nguồn góc</a></li>
                     <li><a href='index.php?page=product'>Sản phẩm</a></li>

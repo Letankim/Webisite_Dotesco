@@ -76,6 +76,20 @@
                                 </textarea>
                             </div>
                             <div class="form-group">
+                                <label for="priority">Ưu tiên: </label>
+                                <select name="priority" id="priority">
+                                    <?php
+                                        if($currentProduct['priority'] == 1) {
+                                            echo "<option value='0'>Bình thường</option>
+                                            <option value='1' selected>Ưu tiên</option>";
+                                        } else  {
+                                            echo "<option value='0' selected>Bình thường</option>
+                                            <option value='1'>Ưu tiên</option>";
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
                                 <label for="status">Status</label>
                                 <select name="status" id="status">
                                     <?php
