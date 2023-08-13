@@ -79,6 +79,11 @@ if(submitBtn) {
             e.preventDefault();
         }
     })
+    function resetForm() {
+        inputsToValidate.forEach(function(item) {
+            handleSuccess(item.element);
+        })
+    }    
 }
 
 // show pop up
@@ -94,13 +99,45 @@ if(popUp) {
             overlay.classList.add("active");
         })
     })
-    closeBtn.addEventListener('click', function(e) {
+    closeBtn.addEventListener('click', function() {
         popUp.classList.remove("active");
         overlay.classList.remove("active");
+        resetForm();
     })
-    overlay.addEventListener('click', function(e) {
+    overlay.addEventListener('click', function() {
         popUp.classList.remove("active");
         overlay.classList.remove("active");
+        resetForm();
+    })
+}
+// drop down
+const btnDropDow = document.querySelectorAll('.drop_down_category');
+
+if( btnDropDow) {
+    btnDropDow.forEach(function(item) {
+        item.addEventListener('click', function(e) {
+            const listNav = item.parentElement.parentElement.querySelector(".list_nav_left");
+            if(listNav.classList.contains("active")) {
+                listNav.classList.remove("active");
+                item.querySelector('i').setAttribute('class',"bx bxs-chevron-down");
+            } else {
+                listNav.classList.add("active");  
+                item.querySelector('i').setAttribute('class',"bx bxs-chevron-up");
+            }
+        })
     })
 }
 
+const boxChangePassword = document.querySelector('.change-password'),
+    btnShowChange = document.querySelector('.btn-change-password');
+
+if(btnShowChange) {
+    btnShowChange.addEventListener('click', () => {
+        boxChangePassword.classList.toggle('active');
+        if(boxChangePassword.classList.contains('active')) {
+            btnShowChange.innerHTML = 'Ẩn box cập nhập';
+        } else {
+            btnShowChange.innerHTML = 'Cập nhật mật khẩu';
+        }
+    });
+}

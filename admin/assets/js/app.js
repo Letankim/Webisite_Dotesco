@@ -25,3 +25,49 @@ if(deleteBtn) {
         });
     })
 }
+// ajax
+function deleteByCheck(typeDelete) {
+    const checkList = document.querySelectorAll('.check-item');
+    const listChecked = [];
+    checkList.forEach(function(item) {
+        if(item.checked) {
+            listChecked.push(item.value);
+        }
+    });
+    const numberOfDelete = listChecked.length;
+    if(numberOfDelete > 0) {
+        if(confirm(`Bạn có chắc muốn xóa ${numberOfDelete} mục này?`)) {
+            $.ajax({
+                url: `./view/delete/deleteByCheck${typeDelete}.php`,
+                type: 'POST',
+                dataType: 'html',
+                data: {
+                    'dataDelete[]': listChecked,
+                    numberOfDelete: numberOfDelete,
+                    isAll: false
+                }
+            }).done(function (response) {
+                location.reload();
+            });
+        }
+    }
+}
+
+
+function deleteAll(typeDelete) {
+    const listChecked = [1, 2];
+    if(confirm(`Bạn có chắc muốn xóa tất cả mục này?`)) {
+        $.ajax({
+            url: `./view/delete/deleteByCheck${typeDelete}.php`,
+            type: 'POST',
+            dataType: 'html',
+            data: {
+                'dataDelete[]': listChecked,
+                numberOfDelete: -1,
+                isAll: true
+            }
+        }).done(function (response) {
+            location.reload();
+        });
+    }
+}

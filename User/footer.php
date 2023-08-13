@@ -3,7 +3,10 @@
                 <div class="row">
                     <div class="box-item-contact col-lg-4 col-sm-12 col-md-6 col-12">
                         <h2 class="contact-title">Giới thiệu</h2>
-                        <p class="introduction-content">– Lĩnh vực hoạt động của Công Ty TNHH Thiết Bị Tiến Phát bao gồm: + Tư vấn trang bị thiết bị thành một phòng thí nghiệm hoàn chỉnh dùng cho giảng dạy, nghiên cứu, kiểm nghiệm, xét nghiệm,… + Cung cấp máy móc, thiết bị và vật tư</p>
+                        <div class="introduction-content">
+                            <?=$introduction['content']?>
+                        </div>
+                        <a style="font-size: 1.4rem; margin-top: 3px;" href="./gioi-thieu">Xem thêm</a>
                     </div>
                     <div class="box-item-contact col-lg-4 col-sm-12 col-md-6 col-12">
                         <h2 class="contact-title">Sản phẩm</h2>
@@ -12,7 +15,7 @@
                             $categoryFooter = getCategoryFooter();
                             foreach($categoryFooter as $category) {
                                 echo "<li class='item_about-product'>
-                                  <a href='./index.php?act=trangsanphamdanhmuc&id=".$category['id']."' class='item_about-product'>".$category['name']."</a>
+                                  <a href='./danh-muc/".$category['id']."/".vn_to_str($category['name'])."' class='item_about-product'>".$category['name']."</a>
                                 </li>";
                             }
                           ?>
@@ -45,13 +48,20 @@
         </section>
     </main>
     <footer class = "background_main">
-        <span class = "text-center p-3">&copy;Copyright by letankim2003</span>
+        <span class = "text-center p-3">
+          &COPY;
+                <?php
+                    echo date("Y");
+                ?> 
+            DOTESCO. All rights reserved | &COPY;Copyright by Letankim
+        </div>
+        </span>
     </footer>
     <div class="overlay"></div>
     <div class="pop-up">
       <i class='bx bxs-x-circle btn-close-pop-up' ></i>
       <h3 class="title-pop-up">Đăng ký nhận tư vấn</h3>
-      <form class = "form-contact" method="post" action="index.php?act=sendContactItemPage">
+      <form class = "form-contact" method="post" action="./gui-tin-nhan-san-pham">
         <div class="mb-3">
             <label for="name" class="form-label">Họ tên: </label>
             <input type="text" class="form-control" id="name" name = "name" placeholder="Họ tên">

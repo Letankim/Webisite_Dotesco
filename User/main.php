@@ -5,11 +5,14 @@
                 <h2 class="title_nav_left">
                     DANH MỤC SẢN PHẨM
                 </h2>
+                <div class = "drop_down_category">
+                    <i class='bx bx-chevron-down'></i>
+                </div>
             </div>
             <!-- render from database -->
             <?=showCategory($allCategoryActive)?>
         </div>
-        <div id="carouselExampleIndicators" class="carousel slide banner_main col-lg-9 col-12 col-sm-12 col-md-7" data-bs-ride="carousel">
+        <div style="margin-top: 10px" id="carouselExampleIndicators" class="carousel slide banner_main col-lg-9 col-12 col-sm-12 col-md-7" data-bs-ride="carousel">
             <!-- render banner -->
             <?=showBanner($allBannerActive)?>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

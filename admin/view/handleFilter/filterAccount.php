@@ -27,9 +27,13 @@
                 </div>
                 </div>
                 <div class="table-responsive">
+                <div class="box-action-delete">
+                    <span class="btn-delete-by-check" onClick='deleteByCheck("Account")'>Xóa các mục đã chọn</span>
+                </div>
                     <table class="table table-striped b-t b-light">
                     <thead>
                         <tr>
+                        <th style="width:20px;">Chọn</th>
                         <th style="width:20px;">STT</th>
                         <th>Username</th>
                         <th>Avatar</th>

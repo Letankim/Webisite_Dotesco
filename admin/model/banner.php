@@ -25,8 +25,8 @@
         return getByID($sql);
     }
 
-    function addNewBanner($img, $status, $priority) {
-        $sql = "INSERT INTO tbl_banner (img, status, priority) VALUES ('$img', '$status', '$priority')";
+    function addNewBanner($img, $status, $priority, $date) {
+        $sql = "INSERT INTO tbl_banner (img, status, priority, date) VALUES ('$img', '$status', '$priority', '$date')";
         insert($sql);
     }
 
@@ -41,6 +41,10 @@
 
     function deleteBanner($id) {
         $sql = "DELETE FROM tbl_banner WHERE id=$id";
+        delete($sql);
+    }
+    function deleteAllBanner() {
+        $sql = "DELETE FROM tbl_banner";
         delete($sql);
     }
 ?>

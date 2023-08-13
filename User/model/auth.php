@@ -1,4 +1,8 @@
 <?php
+    function getUserById($id) {
+        $sql = "SELECT * FROM tbl_account WHERE id = '$id'";
+        return getByID($sql);
+    }
     function addNewAccount($username, $email,$password,$role, $status) {
         $username = validationInput($username);
         $password = encodePassword($password);
@@ -17,9 +21,9 @@
         return getByID($sql);
     }
 
-    function addAccount($username, $email, $password) {
-        $sql = "INSERT INTO tbl_account (username, email,password, role, status)
-         VALUES ('$username', '$email', '$password', 0, 1)";
+    function addAccount($username, $email, $password, $date) {
+        $sql = "INSERT INTO tbl_account (username, email,password, role, status, date)
+         VALUES ('$username', '$email', '$password', 0, 1, '$date')";
         insert($sql);
     }
 

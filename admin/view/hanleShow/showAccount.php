@@ -15,21 +15,24 @@
                     $messageStatus = "Đang tắt";
                 }
                 $index++;
-                $account.= "<tr>
-                <td>".$index."</td>
+                $account.= "<tr> <td>";
+                if($item['role'] != 1) {
+                    $account.="<input type='checkbox' class = 'check-item' value='".$item['id']."'/>";
+                }  
+                $account.="</td><td>".$index."</td>
                 <td>".$item['username']."</td>
                 <td>".$item['email']."</td>
                 <td>".$item['date']."</td>
                 <td> <span style = '$style' class='status-message'>$messageStatus</span></td>
-                <td> <span style = 'background-color: #009da7;' class='status-message'>$messageRole</span></td>
+                <td> <span class='status-message label label-success'>$messageRole</span></td>
                 <td>
-                    <a href='index.php?page=updateAccount&id=".$item['id']."' alt='Chỉnh sửa'>
+                    <a title='Chỉnh sửa' href='index.php?page=updateAccount&id=".$item['id']."' alt='Chỉnh sửa'>
                         <i class='bx bx-edit-alt' style='color: green;'></i>
                     </a>";
                 if($item['role'] == 0) {
                     $account.="<a style='display: none;' href='index.php?page=deleteAccount&id=".$item['id']."' class = 'deleteSubmit'>
                     </a>
-                    <span class = 'deleteBtn' style='cursor: pointer;' alt='Xóa'>
+                    <span title='Xóa' class = 'deleteBtn' style='cursor: pointer;' alt='Xóa'>
                         <i class='fa fa-times text-danger text'></i>
                     </span>";
                 }

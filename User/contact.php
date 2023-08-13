@@ -1,25 +1,3 @@
-<section class = "container_banner container">
-    <div class="row">
-        <div class="main-left col-lg-3 col-12 col-sm-12 col-md-5">
-            <div class="navigation_left col-lg-12">
-                <div class="container_nav_left background_main">
-                    <h2 class="title_nav_left">
-                        DANH MỤC SẢN PHẨM
-                    </h2>
-                </div>
-                <!-- render danh muc from database -->
-                <?=showCategory($allCategoryActive)?>
-            </div>
-            <div class="navigation_left col-lg-12">
-                <div class="container_nav_left background_main">
-                    <h2 class="title_nav_left">
-                        Nhà sản xuất
-                    </h2>
-                </div>
-                <!-- render nha san xua tu database -->
-                <?=showCategoryByOrigin($allOriginActive)?>
-            </div>
-        </div>
         <div class="container col-lg-9 col-12 col-sm-12 col-md-7">
             <div class="card-group card_header_product row m-0 mt-xl-5">
                 <div class="card border-0 col-sm-12 col-md-6 col-lg-6 col-12">
@@ -50,7 +28,7 @@
                     </div>
                 </div>
                 <div class="card border-0 col-sm-12 col-md-6 col-lg-6 col-12">           
-                    <form class = "form-contact" method="post" action="index.php?act=sendContact">
+                    <form class = "form-contact" method="post" action="./gui-tin-nhan">
                         <div class="mb-3">
                             <label for="name" class="form-label">Họ tên: </label>
                             <input type="text" class="form-control" id="name" name = "name" placeholder="Họ tên">

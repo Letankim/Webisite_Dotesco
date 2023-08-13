@@ -1,25 +1,7 @@
-<section class = "container_banner container">
-    <div class="row">
-        <div class="main-left col-lg-3 col-12 col-sm-12 col-md-5">
-            <div class="navigation_left col-lg-12">
-                <div class="container_nav_left background_main">
-                    <h2 class="title_nav_left">
-                        DANH MỤC SẢN PHẨM
-                    </h2>
-                </div>
-                <!-- render danh muc from database -->
-                <?=showCategory($allCategoryActive)?>
-            </div>
-            <div class="navigation_left col-lg-12">
-                <div class="container_nav_left background_main">
-                    <h2 class="title_nav_left">
-                        Nhà sản xuất
-                    </h2>
-                </div>
-                <!-- render nha san xua tu database -->
-                <?=showCategoryByOrigin($allOriginActive)?>
-            </div>
-        </div>
+<script>
+    const metaImg = document.querySelector('.meta-img');
+    metaImg.setAttribute('content',"https://letankim2003.000webhostapp.com/uploads/<?=$currentProduct['img']?>");
+</script>
         <div class="container main-product col-lg-9 col-12 col-sm-12 col-md-7">
             <div class="product-details row">
                 <div class="box-image col-12 col-sm-12 col-md-6 col-lg-6">
@@ -62,6 +44,18 @@
                         <span class="box-title">Tình trạng:</span>
                         <span class="content-information content-information-highlight">Còn hàng</span>
                     </div>
+                    <div class="action_fb">
+                        <div class="fb-share-button" data-href="" data-layout="button_count" data-size="small">
+                            <a target="_blank" href="" class="fb-xfbml-parse-ignore">Chia sẻ</a>
+                        </div>
+                        <script>
+                            const shareFb = document.querySelector('.fb-share-button'),
+                            shareBtn = shareFb.querySelector('a');
+                            const currentURL = window.location.href;
+                            shareFb.setAttribute('data-href', currentURL);
+                            shareBtn.href = `https://www.facebook.com/sharer/sharer.php?u=${currentURL}&amp;src=sdkpreparse`;
+                        </script>
+                    </div>
                 </div>
             </div>
             <div class="product-desc">
@@ -78,6 +72,24 @@
                     </p>
                 </div>
             </div>
+            <!-- comment facebook -->
+            <div class="comment">
+                <div class="title_header">
+                    <h2 class="title_content">
+                        <span class = 'background_main'>Bình luận</span>
+                    </h2>
+                </div>
+                <div class="comment_fb">
+                    <div class="fb-comments"
+                    data-href=""
+                    data-width="100%" data-numposts="5">
+                    </div>
+                </div>
+                <script>
+                    const fbComment = document.querySelector('.fb-comments');
+                    fbComment.setAttribute('data-href', window.location.href);
+                </script>
+            </div>
             <div class="main-product col-lg-12 col-12 col-sm-12 col-md-12">
                 <div class="title_header">
                     <h2 class="title_content">
@@ -85,14 +97,15 @@
                     </h2>
                 </div>
             <!--  render product related from database -->
-            <?=showProduct($productRelated)?>
+            
+            <?php
+                if(count($productRelated) > 0) {
+                    echo showProduct($productRelated);
+                } else {
+
+                }
+            ?>
             </div>
         </div>
     </div>
 </section>
-<?php
-    echo "<script>
-    const title = document.querySelector('title');
-    title.innerHTML = '".$currentProduct['name']."';
-    </script>";
-?>

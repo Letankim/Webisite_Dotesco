@@ -19,6 +19,7 @@
                 $srcImg = PATH_UPLOADS.$item['img'];
                 $index++;
                 $sanPham.= "<tr>
+                <td><input type='checkbox' class = 'check-item' value='".$item['id']."'/></td>
                 <td>".$index."</td>
                 <td>".$item['modelID']."</td>
                 <td>".$danhMuc."</td>
@@ -26,18 +27,19 @@
                 <td>".$item['name']."</td>
                 <td><img style='width: 70px;' src='".$srcImg ."'/></td>
                 <td>".$item['date']."</td>
+                <td>".$item['view']."</td>
                 <td> <span style = '$style' class='status-message'>$messageStatus</span></td>
                 <td> <span class='status-message label label-success'>$messageFeatured</span></td>
                 <td>
-                    <a href='index.php?page=updateSanPham&id=".$item['id']."' alt='Chỉnh sửa'>
+                    <a title='Chỉnh sửa' href='index.php?page=updateSanPham&id=".$item['id']."' alt='Chỉnh sửa'>
                         <i class='bx bx-edit-alt' style='color: green;'></i>
                     </a>
                     <a style='display: none;' href='index.php?page=deleteSanPham&id=".$item['id']."' class = 'deleteSubmit'>
                     </a>
-                    <span class = 'deleteBtn' style='cursor: pointer;' alt='Xóa'>
+                    <span title='Xóa' class = 'deleteBtn' style='cursor: pointer;' alt='Xóa'>
                         <i class='fa fa-times text-danger text'></i>
                     </span>
-                    <a href='index.php?page=xemSanPhamChiTiet&id=".$item['id']."' alt='Chỉnh sửa'>
+                    <a title='Xem chi tiết' href='index.php?page=xemSanPhamChiTiet&id=".$item['id']."' alt='Chỉnh sửa'>
                         <i class='bx bxs-detail'></i>
                     </a>
                 </td>

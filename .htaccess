@@ -1,0 +1,16 @@
+DirectoryIndex index.php
+
+RewriteEngine on
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# RewriteRule ^(.*)$ index.php?/$1 [L]
+RewriteRule "^([a-zA-Z0-9-]+)$" "?act=$1"
+RewriteRule "^chi-tiet-san-pham/([\w\d\S]+)$" "?act=trangchitietsanpham&id=$1&title=$2"
+RewriteRule "^san-pham/([a-zA-Z0-9-]+)$" "?act=san-pham&trang=$1"
+RewriteRule "^danh-muc/([0-9]+)/([a-zA-Z0-9-]+)$" "?act=san-pham-danh-muc&id=$1&name=$2"
+RewriteRule "^nha-san-xuat/([0-9]+)/([a-zA-Z0-9-]+)$" "?act=san-pham-nha-san-xuat&id=$1&name=$2"
+RewriteRule "^danh-muc/([0-9]+)/([a-zA-Z0-9-]+)/trang-([0-9]+)$" "?act=san-pham-danh-muc&id=$1&name=$2&trang=$3"
+RewriteRule "^nha-san-xuat/([0-9]+)/([a-zA-Z0-9-]+)/trang-([0-9]+)$" "?act=san-pham-nha-san-xuat&id=$1&name=$2&trang=$3"
+RewriteRule "^chi-tiet/([0-9]+)/([a-zA-Z0-9-]+)$" "?act=chi-tiet-san-pham&id=$1&name=$2"
+

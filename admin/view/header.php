@@ -3,8 +3,7 @@
     <title>ADMIN - DOTESCO</title>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
-    <meta name='keywords' content='Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
-    Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design' />
+    <link rel="shortcut icon" href="./assets/images/logo.jpg" type="image/x-icon">
     <script type='application/x-javascript'> addEventListener('load', function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
     <!-- bootstrap-css -->
     <link rel='stylesheet' href='./assets/css/bootstrap.min.css' >
@@ -23,8 +22,19 @@
     <!-- //calendar -->
     <!-- //font-awesome icons -->
     <script src='./assets/js/jquery2.0.3.min.js'></script>
-    <!-- <script src='./assets/js/raphael-min.js'></script>
-    <script src='./assets/js/morris.js'></script> -->
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <!-- <script type='text/javascript'>
+        document.onkeydown = function(event){
+            if(event.keyCode==123){
+                return false;
+            }
+            else if(event.ctrlKey && event.shiftKey && event.keyCode==73){        
+                return false;  
+            }
+        };
+        document.oncontextmenu = new Function("return false");
+    </script> -->
     </head>
     <body>
     <section id='container'>
@@ -51,8 +61,7 @@
                     <b class='caret'></b>
                 </a>
                 <ul class='dropdown-menu extended logout'>
-                    <li><a href='#'><i class='fa fa-suitcase'></i>Profile</a></li>
-                    <li><a href='login.html'><i class='fa fa-key'></i> Log Out</a></li>
+                    <li><a href='./index.php?page=logout'><i class='fa fa-key'></i>Đăng xuất</a></li>
                 </ul>
             </li>
             <!-- user login dropdown end -->
@@ -66,18 +75,18 @@
             <div class='leftside-navigation'>
                 <ul class='sidebar-menu' id='nav-accordion'>
                     <li>
-                        <a class='active' href='index.php'>
+                        <a style="font-size: 15px;" class='active' href='index.php'>
                             <i class='fa fa-dashboard'></i>
                             <span>Trang chủ</span>
                         </a>
                     </li>
-                    <li><a href='index.php?page=introduction'>Giới thiệu về công ty</a></li>
-                    <li><a href='index.php?page=banner'>Banner</a></li>
-                    <li><a href='index.php?page=danhmuc'>Danh mục</a></li>
-                    <li><a href='index.php?page=nguongoc'>Nguồn góc</a></li>
-                    <li><a href='index.php?page=product'>Sản phẩm</a></li>
-                    <li><a href='index.php?page=account'>Tất cả tài khoản</a></li>
-                    <li><a href='index.php?page=logout'>Đăng xuất</a></li>
+                    <li><a style="font-size: 15px;" href='index.php?page=introduction'>Giới thiệu về công ty</a></li>
+                    <li><a style="font-size: 15px;" href='index.php?page=banner'>Banner</a></li>
+                    <li><a style="font-size: 15px;" href='index.php?page=danhmuc'>Danh mục</a></li>
+                    <li><a style="font-size: 15px;" href='index.php?page=nguongoc'>Nguồn gốc</a></li>
+                    <li><a style="font-size: 15px;" href='index.php?page=product'>Sản phẩm</a></li>
+                    <li><a style="font-size: 15px;" href='index.php?page=account'>Tất cả tài khoản</a></li>
+                    <li><a style="font-size: 15px;" href='index.php?page=logout'>Đăng xuất</a></li>
                 </ul>            
             </div>
             <!-- sidebar menu end-->

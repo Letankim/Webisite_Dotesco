@@ -1,7 +1,11 @@
 <!-- footer -->
     <div class='footer'>
         <div class='wthree-copyright'>
-            <p>©2023 Visitors. All rights reserved | Design by letankim</p>
+            <p>©
+                <?php
+                    echo date("Y");
+                ?> 
+            DOTESCO. All rights reserved | &COPY;Copy right by Letankim</p>
         </div>
     </div>
     <!-- / footer -->
@@ -13,8 +17,10 @@
     <script src='./assets/js/jquery.scrollTo.js'></script>
     <script src='./assets/js/app.js'></script>
     <script src="./ckeditor/ckeditor.js"></script>
+    
     <script>
         CKEDITOR.replace('content_post');
     </script>
-    </body>
-    </html>
+
+</body>
+</html>

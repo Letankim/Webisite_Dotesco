@@ -37,15 +37,23 @@
           </div>
         </div>
         <div class="table-responsive">
+            <div class="box-action-delete">
+              <span class="btn-delete-by-check" onClick='deleteByCheck("Origin")'>Xóa các mục đã chọn</span>
+              <span class="notice"><b style="color:red;">* </b>Lưu ý: Các nhà sản xuất đang có sản phẩm sẽ không được phép xóa.</span>
+            </div>
             <table class="table table-striped b-t b-light">
               <thead>
                 <tr>
+                  <th style="width:20px;">
+                    Chọn
+                  </th>
                   <th style="width:20px;">
                     STT
                   </th>
                   <th>Tên nhà sản xuất</th>
                   <th>Quốc gia</th>
                   <th>Ngày tạo</th>
+                  <th>Sản phẩm</th>
                   <th>Trạng thái</th>
                   <th>Xử lí</th>
                   <th style="width:30px;"></th>

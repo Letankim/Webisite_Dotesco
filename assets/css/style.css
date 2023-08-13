@@ -113,9 +113,21 @@
     width: 100%;
     height: 45px;
     color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.drop_down_category  {
+    display: none;
+}
+.drop_down_category i{
+    font-size: 1.8rem;
+    margin-right: 5px;
+    cursor: pointer;
 }
 .title_nav_left {
     line-height: 45px;
+    margin: 0;
     margin-left: 10px;
     text-transform: uppercase;
 }
@@ -241,6 +253,12 @@
 .introduction-content {
     color: #fff;
     font-size: 1.3rem;
+    line-height: 1.5rem;
+    max-height: 13rem;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 9;
+    overflow: hidden;
 }
 .list_about-product {
     list-style: none;
@@ -295,6 +313,7 @@ footer {
 
 .display-flex-column textarea {
     border: 1px solid #ced4da;
+    padding: 5px;
 }
 
 .btn-submit-contact {
@@ -363,4 +382,69 @@ footer {
 
 .overlay.active {
     transform: translateY(0);
+}
+
+/* device page */
+.pages {
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+.list_page {
+    display: flex;
+    list-style: none;
+    justify-content: center;
+    gap: 10px;
+}
+.page_item_link {
+    color: black;
+    font-size: 1.5rem;
+    padding: 8px 16px;
+    text-decoration: none;
+    transition: background-color .3s;
+}
+
+.page_item_link.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.page_item_link:hover:not(.active) {
+    background-color: #ddd;
+}
+
+/* share with facebook */
+.action_fb {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+}
+
+/* box message search */
+.box-message-search {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.count-show {
+    font-size: 1.4rem;
+    color: #a2a2a2;
+}
+.btn-change-password {
+    padding: 10px;
+    font-size: 1.4rem;
+    color: #fff;
+    background-color: #01b28c;
+    border: none;
+    outline: none;
+}
+.change-password {
+    display: none;
+    margin-top: 10px;
+}
+
+.change-password.active {
+    display: block;
 }

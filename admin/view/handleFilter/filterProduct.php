@@ -10,12 +10,26 @@
           <div class="col-sm-5 m-b-xs">
              <form action="index.php?page=filterBySanPham" method="post">
                 <select name="status" class="input-sm form-control w-sm inline v-middle">
-                  <option value="1">Đang hoạt động</option>
-                  <option value="0">Đang tắt</option>
+                  <?php
+                    if($status == 1) {
+                      echo '<option value="1" selected>Đang hoạt động</option>
+                      <option value="0">Đang tắt</option>';
+                    } else {
+                      echo '<option value="1">Đang hoạt động</option>
+                      <option value="0" selected>Đang tắt</option>';
+                    }
+                  ?>
                 </select>
                 <select name="priority" class="input-sm form-control w-sm inline v-middle">
-                  <option value="1">Ưu tiên</option>
-                  <option value="0">Bình thường</option>
+                    <?php
+                      if($priority == 1) {
+                        echo '<option value="1" selected>Ưu tiên</option>
+                        <option value="0">Bình thường</option>';
+                      } else {
+                        echo '<option value="1">Ưu tiên</option>
+                        <option value="0" selected>Bình thường</option>';
+                      }
+                    ?>
                 </select>
                 <button class="btn btn-sm btn-default" type="submit" name="filter">Lọc theo trạng thái</button>
              </form>                
@@ -34,9 +48,13 @@
           </div>
         </div>
         <div class="table-responsive">
+            <div class="box-action-delete">
+              <span class="btn-delete-by-check" onClick='deleteByCheck("Product")'>Xóa các mục đã chọn</span>
+            </div>
             <table class="table table-striped b-t b-light">
               <thead>
                 <tr>
+                  <th style="width:20px;">Chọn</th>
                   <th style="width:20px;">STT</th>
                   <th>Model</th>
                   <th>Danh mục</th>
@@ -44,6 +62,7 @@
                   <th>Tên sản phẩm</th>
                   <th>Ảnh</th>
                   <th>Ngày tạo</th>
+                  <th>Lượt xem</th>
                   <th>Trạng thái</th>
                   <th>Xử lí</th>
                   <th style="width:30px;"></th>

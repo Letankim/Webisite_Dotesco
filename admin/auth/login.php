@@ -8,10 +8,14 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         $account = isExistAccount($username);
-        if(count($account) > 0) {
+        if($account) {
+            if($account['status'] == 0) {
+                $error_message = "Tài khoản này đang bị khóa.";
+            } else
             if($account['role'] == 1) {
                 $isValidPassword = password_verify($password, $account['password']);
                 if($isValidPassword) {
+                    $_SESSION['isAdminLogin'] = true;
                     $_SESSION['roleAdmin'] = 1;
                     $_SESSION['usernameAdmin'] = $account['username'];
                     header("Location: ../index.php");
@@ -22,13 +26,13 @@
                 $error_message = "Bạn không được phép truy cập.";
             }
         } else {
-            $error_message = 'Username không tồn tại.';
+            $error_message = 'Tên đăng nhập không tồn tại.';
         }
     }
 ?>
 <!DOCTYPE html>
 <head>
-<title>Visitors an Admin Panel Category Bootstrap Responsive Website Template | Login :: w3layouts</title>
+<title>DOTESCO - Đăng nhập Admin</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="keywords" content="Visitors Responsive web template, Bootstrap Web Templates, Flat Web Templates, Android Compatible web template, 
@@ -52,21 +56,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         display: block;
         width: 100%;
         text-align: center;
-        color: red;
+        color: #a71b4b;
         font-weight: bold;
     }
 </style>
+<script type='text/javascript'>
+    document.onkeydown = function(event){
+        if(event.keyCode==123){
+            return false;
+        }
+        else if(event.ctrlKey && event.shiftKey && event.keyCode==73){        
+            return false;  
+        }
+    };
+    document.oncontextmenu = new Function("return false");
+</script>
 </head>
 <body>
 <div class="log-w3">
 <div class="w3layouts-main">
-	<h2>Sign In Now</h2>
+	<h2>Đăng nhập với admin</h2>
 		<form action="#" method="post">
-			<input type="text" class="ggg" name="username" placeholder="E-MAIL" required="">
-			<input type="password" class="ggg" name="password" placeholder="PASSWORD" required="">
-			<h6><a href="#">Forgot Password?</a></h6>
+			<input type="text" class="ggg" name="username" placeholder="TÊN ĐĂNG NHẬP" required="">
+			<input type="password" class="ggg" name="password" placeholder="MẬT KHẨU" required="">
 				<div class="clearfix"></div>
-				<input type="submit" value="Sign In" name="login">
+                <h6><a href="./forgetPassword.php">Quên mật khẩu?</a></h6>
+				<input type="submit" value="ĐĂNG NHẬP" name="login">
                 <span class = "error_message"><?=$error_message?></span>
 		</form>
 </div>

@@ -1,9 +1,14 @@
 <?php
     function showProductByCategory($products) {
         $productByCategory = "<div class='card mb-3' style='max-width: 540px;'>";
+        $index = 0;
         foreach ($products as $product){
+            $style = "";
+            if($index != 0) {
+                $style = "style='margin-top: 3px;'";
+            }
             $productByCategory.="
-                <a href='index.php?act=trangsanpham&id=".$product['id']."' class='row g-0 text-decoration-none'>
+                <a ".$style." href='./chi-tiet/".$product['id']."/".vn_to_str($product['name'])."' class='row g-0 text-decoration-none'>
                 <div class='col-md-4 col-4 col-sm-4 text-center'>
                 <img style='height: 135px;object-fix:contain;' src='".PATH_UPLOADS_IMG_USER.$product['img']."' class='img-fluid rounded-start' alt='".$product['name']."'>
                 </div>
@@ -15,6 +20,7 @@
                 </div>
                 </a>
                 ";
+            $index++;
         }
         $productByCategory.="</div>";
         return $productByCategory;
@@ -26,15 +32,17 @@
         if($numberOfCategories > 0) {
             foreach($categories as $category) {
                 $categoryInfo = getCategoryByID($category['id']);
-                $productHtml.="
-                <div class='box_product_category col-lg-4 col-12 col-sm-12 col-md-6'>
-                    <div class='title_header'>
-                        <h2 class='title_content'>
-                            <span class = 'background_main'>".$categoryInfo['name']."</span>
-                        </h2>
-                    </div>
-                    ".showProductByCategory(selectAllProductByCategoryLimit($categoryInfo['id']))."
-                </div>";
+                if($categoryInfo) {
+                    $productHtml.="
+                    <div class='box_product_category col-lg-4 col-12 col-sm-12 col-md-6'>
+                        <div class='title_header'>
+                            <h2 class='title_content'>
+                                <span class = 'background_main'>".$categoryInfo['name']."</span>
+                            </h2>
+                        </div>
+                        ".showProductByCategory(selectAllProductByCategoryLimit($categoryInfo['id']))."
+                    </div>";
+                }
             }
         }
         return $productHtml;

@@ -14,9 +14,9 @@
         return getByID($sql);
     }
 
-    function addNewIntroduction($content, $status) {
+    function addNewIntroduction($content, $status, $date) {
         $content = validationInput($content);
-        $sql = "INSERT INTO tbl_introduction (content, status) VALUES ('$content', '$status')";
+        $sql = "INSERT INTO tbl_introduction (content, status, date) VALUES ('$content', '$status', '$date')";
         insert($sql);
     }
 
@@ -28,6 +28,10 @@
 
     function deleteIntroduction($id) {
         $sql = "DELETE FROM tbl_introduction WHERE id=$id";
+        delete($sql);
+    }
+    function deleteAllIntroduction() {
+        $sql = "DELETE FROM tbl_introduction";
         delete($sql);
     }
 ?>

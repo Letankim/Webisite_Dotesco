@@ -18,18 +18,19 @@
                 $srcImg = PATH_UPLOADS.$item['img'];
                 $index++;
                 $banner.= "<tr>
+                <td><input type='checkbox' class = 'check-item' value='".$item['id']."'/></td>
                 <td>".$index."</td>
                 <td><img style='width: 70px;' src='".$srcImg ."'/></td>
                 <td>".$item['date']."</td>
                 <td> <span class='status-message label label-warning'>$messagePrioriry</span></td>
                 <td> <span style = '$style' class='status-message'>$messageStatus</span></td>
                 <td>
-                    <a href='index.php?page=updateBanner&id=".$item['id']."' alt='Chỉnh sửa'>
+                    <a title='Chỉnh sửa' href='index.php?page=updateBanner&id=".$item['id']."' alt='Chỉnh sửa'>
                         <i class='bx bx-edit-alt' style='color: green;'></i>
                     </a>
                     <a style='display: none;' href='index.php?page=deleteBanner&id=".$item['id']."' class = 'deleteSubmit'>
                     </a>
-                    <span class = 'deleteBtn' style='cursor: pointer;' alt='Xóa'>
+                    <span title='Xóa' class = 'deleteBtn' style='cursor: pointer;' alt='Xóa'>
                         <i class='fa fa-times text-danger text'></i>
                     </span>
                 </td>

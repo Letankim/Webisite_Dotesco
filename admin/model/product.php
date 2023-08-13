@@ -9,6 +9,17 @@
         return getAll($sql);
     }
 
+    function getAllProductByCategory($idCategory) {
+        $sql = "SELECT * FROM tbl_product WHERE idCategory = $idCategory";
+        return count(getAll($sql));
+    }
+
+    function getAllProductByOrigin($idOrigin) {
+        $sql = "SELECT * FROM tbl_product WHERE idOrigin = $idOrigin";
+        return count(getAll($sql));
+    }
+
+
     function searchProduct($searchProduct) {
         $searchProduct = validationInput($searchProduct);
         $sql = "SELECT * FROM tbl_product WHERE name like '%".$searchProduct."%' ORDER BY id DESC";
@@ -29,13 +40,13 @@
         $sql = "SELECT * FROM tbl_product WHERE id='$id'";
         return getByID($sql);
     }
-    function addNewProduct($iddm, $idNguonGoc, $model, $name, $desc, $mainImg ,$status, $priority) {
+    function addNewProduct($iddm, $idNguonGoc, $model, $name, $desc, $mainImg ,$status, $priority, $date) {
         $conn = connect();
         $name = validationInput($name);
         $model = validationInput($model);
         $desc = validationInput($desc);
-        $sql = "INSERT INTO tbl_product (idCategory, idOrigin, modelID, name, description, img,status, priority) 
-        VALUES ('$iddm', '$idNguonGoc','$model', '$name', '$desc','$mainImg', '$status', '$priority')";
+        $sql = "INSERT INTO tbl_product (idCategory, idOrigin, modelID, name, description, img,status, priority, date) 
+        VALUES ('$iddm', '$idNguonGoc','$model', '$name', '$desc','$mainImg', '$status', '$priority','$date')";
         $conn->exec($sql);
         return $conn->lastInsertId();
     }
@@ -66,9 +77,17 @@
         $sql = "DELETE FROM tbl_product WHERE id=$id";
         delete($sql);
     }
+    function deleteAllProduct() {
+        $sql = "DELETE FROM tbl_product";
+        delete($sql);
+    }
 
     function deleteImgDescProduct($idProduct) {
         $sql = "DELETE FROM tbl_image WHERE idProduct=$idProduct";
+        delete($sql);
+    }
+    function deleteAllImgDescProduct() {
+        $sql = "DELETE FROM tbl_image";
         delete($sql);
     }
 ?>

@@ -1,7 +1,13 @@
 <?php
-   include "mail/PHPMailer/src/PHPMailer.php";
-   include "mail/PHPMailer/src/Exception.php";
-   include "mail/PHPMailer/src/SMTP.php";
+    if($typeUser == 0) {
+        include "mail/PHPMailer/src/PHPMailer.php";
+        include "mail/PHPMailer/src/Exception.php";
+        include "mail/PHPMailer/src/SMTP.php";
+    } else if($typeUser == 1) {
+        include "../../mail/PHPMailer/src/PHPMailer.php";
+        include "../../mail/PHPMailer/src/Exception.php";
+        include "../../mail/PHPMailer/src/SMTP.php";
+    }
    
    use PHPMailer\PHPMailer\PHPMailer;
    use PHPMailer\PHPMailer\Exception;

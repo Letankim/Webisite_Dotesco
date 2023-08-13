@@ -25,9 +25,9 @@
         return getByID($sql);
     }
 
-    function addNewCategory($name, $status) {
+    function addNewCategory($name, $status, $date) {
         $name = validationInput($name);
-        $sql = "INSERT INTO tbl_category (name, status) VALUES ('$name', '$status')";
+        $sql = "INSERT INTO tbl_category (name, status, date) VALUES ('$name', '$status', '$date')";
         insert($sql);
     }
 
@@ -39,6 +39,11 @@
 
     function deleteCategory($id) {
         $sql = "DELETE FROM tbl_category WHERE id=$id";
+        delete($sql);
+    }
+    
+    function deleteAllCategory() {
+        $sql = "DELETE FROM tbl_category";
         delete($sql);
     }
 ?>

@@ -16,37 +16,95 @@
     }
 
     function getAll($sql) {
-        $conn = connect();
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        // set the resulting array to associative
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        return $stmt->fetchAll();;
+        $result = array();
+        try {
+            $conn = connect();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            // set the resulting array to associative
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetchAll();
+        } catch(Exception $e) {
+            try {
+                $date= date('Y/m/d');
+                $myLogger = fopen('./Log/error_admin.log', 'a');
+                $content = "Admin: select all (".$e->getMessage().") ".$date."\n";
+                fwrite($myLogger, $content);
+            } catch(Exception $error) {
+
+            }
+        }
+        return $result;
     }
 
     function getByID($sql) {
-        $conn = connect();
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        // set the resulting array to associative
-        $stmt->setFetchMode(PDO::FETCH_ASSOC);
-        $result = $stmt->fetch();
+        $result = array();
+        try {
+            $conn = connect();
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            // set the resulting array to associative
+            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+            $result = $stmt->fetch();
+        } catch(Exception $e) {
+            try {
+                $date= date('Y/m/d');
+                $myLogger = fopen('./Log/error_admin.log', 'a');
+                $content = "Admin: select one by id (".$e->getMessage().") ".$date."\n";
+                fwrite($myLogger, $content);
+            } catch(Exception $error) {
+
+            }
+        }
         return $result;
     }
 
     function insert($sql) {
-        $conn = connect();
-        $conn->exec($sql);
+        try {
+            $conn = connect();
+            $conn->exec($sql);
+        } catch(Exception $e) {
+            try {
+                $date= date('Y/m/d');
+                $myLogger = fopen('./Log/error_admin.log', 'a');
+                $content = "Admin: insert data (".$e->getMessage().") ".$date."\n";
+                fwrite($myLogger, $content);
+            } catch(Exception $error) {
+
+            }
+        }
     }
 
     function update($sql) {
-        $conn = connect();
+        try {
+            $conn = connect();
         $stmt = $conn->prepare($sql);
         $stmt->execute();
+        } catch(Exception $e) {
+            try {
+                $date= date('Y/m/d');
+                $myLogger = fopen('./Log/error_admin.log', 'a');
+                $content = "Admin: update data (".$e->getMessage().") ".$date."\n";
+                fwrite($myLogger, $content);
+            } catch(Exception $error) {
+
+            }
+        }
     }
 
     function delete($sql) {
-        $conn = connect();
-        $conn->exec($sql);
+        try {
+            $conn = connect();
+            $conn->exec($sql);
+        } catch(Exception $e) {
+            try {
+                $date= date('Y/m/d');
+                $myLogger = fopen('./Log/error_admin.log', 'a');
+                $content = "Admin: delete data (".$e->getMessage().") ".$date."\n";
+                fwrite($myLogger, $content);
+            } catch(Exception $error) {
+
+            }
+        }
     }
 ?>

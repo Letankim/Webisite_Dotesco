@@ -44,7 +44,7 @@ body a:hover{
     width:240px;
     height:100%;
     position:fixed;
-    background: #12471b;
+    background: #265222;
     -webkit-transition:all .3s ease-in-out;
     -moz-transition:all .3s ease-in-out;
     -o-transition:all .3s ease-in-out;
@@ -2568,6 +2568,26 @@ div#graph10,div#graph11 {
 }
 .show_more {
     font-size: 17px;
+}
+.box-action-delete {
+    margin-left: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.btn-delete-by-check {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #b30d0d;
+    color: #fff;
+    border-radius: 3px;
+    cursor: pointer;
+}
+.notice {
+    font-size: 12px;
+    color: #bcbcbc;
 }
 /*-- responsive design --*/
 @media (max-width: 1440px){

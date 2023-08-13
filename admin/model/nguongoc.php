@@ -25,10 +25,10 @@
         return getByID($sql);
     }
 
-    function addNewNguonGoc($name, $country,$status) {
+    function addNewNguonGoc($name, $country,$status, $date) {
         $name = validationInput($name);
         $country = validationInput($country);
-        $sql = "INSERT INTO tbl_origin (name,country,status) VALUES ('$name', '$country','$status')";
+        $sql = "INSERT INTO tbl_origin (name,country,status, date) VALUES ('$name', '$country','$status', '$date')";
         insert($sql);
     }
 
@@ -43,7 +43,8 @@
         $sql = "DELETE FROM tbl_origin WHERE id=$id";
         delete($sql);
     }
-
-    
-    
+    function deleteAllNguonGoc() {
+        $sql = "DELETE FROM tbl_origin WHERE";
+        delete($sql);
+    }
 ?>

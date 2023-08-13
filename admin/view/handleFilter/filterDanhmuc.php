@@ -18,8 +18,6 @@
                         echo '<option value="1">Đang hoạt động</option>
                         <option value="0" selected>Đang tắt</option>';
                       }
-                        
-                      
                     ?>
                 </select>
                 <button class="btn btn-sm btn-default" type="submit" name="filter">Lọc theo trạng thái</button>
@@ -39,14 +37,22 @@
           </div>
         </div>
         <div class="table-responsive">
+            <div class="box-action-delete">
+              <span class="btn-delete-by-check" onClick='deleteByCheck("Category")'>Xóa các mục đã chọn</span>
+              <span class="notice"><b style="color:red;">* </b>Lưu ý: Các danh mục đang có sản phẩm sẽ không được phép xóa.</span>
+            </div>
             <table class="table table-striped b-t b-light">
               <thead>
                 <tr>
+                  <th style="width:20px;">
+                    Chọn
+                  </th>
                   <th style="width:20px;">
                     STT
                   </th>
                   <th>Tên danh mục</th>
                   <th>Ngày tạo</th>
+                  <th>Sản phẩm</th>
                   <th>Trạng thái</th>
                   <th>Xử lí</th>
                   <th style="width:30px;"></th>

@@ -25,7 +25,6 @@
                 <div class="form-group">
                     <label for="role">Role</label>
                     <select name="role" id="role">
-                        <option value="0">Vai trò</option>
                         <option value="0">Người dùng</option>
                         <option value="1">Admin</option>
                     </select>
@@ -33,9 +32,8 @@
                 <div class="form-group">
                     <label for="status">Status</label>
                     <select name="status" id="status">
-                        <option value="1">Trạng thái</option>
-                        <option value="0">Không hoạt động</option>
                         <option value="1">Hoạt động</option>
+                        <option value="0">Không hoạt động</option>
                     </select>
                 </div>
                 <button type="submit" name = "addAccount" class="btn btn-info">Thêm</button>
@@ -50,6 +48,7 @@
           <div class="col-sm-5 m-b-xs">
              <form action="index.php?page=filterByAccount" method="post">
                 <select name="status" class="input-sm form-control w-sm inline v-middle">
+                  <option value="1">Trạng thái</option>
                   <option value="1">Đang hoạt động</option>
                   <option value="0">Đang tắt</option>
                 </select>
@@ -70,9 +69,14 @@
           </div>
         </div>
         <div class="table-responsive">
+            <div class="box-action-delete">
+              <span class="btn-delete-by-check" onClick='deleteByCheck("Account")'>Xóa các mục đã chọn</span>
+              <span class="btn-delete-by-check" onClick='deleteAll("Account")'>Xóa tất cả</span>
+            </div>
             <table class="table table-striped b-t b-light">
               <thead>
                 <tr>
+                  <th style="width:20px;">Chọn</th>
                   <th style="width:20px;">STT</th>
                   <th>Username</th>
                   <th>Email</th>
@@ -91,7 +95,7 @@
         <footer class="panel-footer">
           <div class="row">
             <div class="col-sm-5 text-center">
-              <small class="text-muted inline m-t-sm m-b-sm">Hiển thị <?=$page?> - <?=($page+20)?></small>
+              <small class="text-muted inline m-t-sm m-b-sm">Hiển thị <?=$page+1?> - <?=($page+20)?></small>
             </div>
             <div class="col-sm-7 text-right text-center-xs">                
               <ul class="pagination pagination-sm m-t-none m-b-none">

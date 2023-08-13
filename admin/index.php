@@ -1,27 +1,8 @@
 <?php
     session_start();
     ob_start();
-    if(isset($_SESSION['roleAdmin']) && $_SESSION['roleAdmin'] == 1) {
-
-        include_once "./model/connect.php";
-        include_once "../encode.php";
-        include_once "./model/upload.php";
-        include_once "../define.php";
-        include_once "./model/validation.php";
-        include_once "./model/deleteImgInFile.php";
-        include_once "./model/category.php";
-        include_once "./model/nguongoc.php";
-        include_once "./model/product.php";
-        include_once "./model/account.php";
-        include_once "./model/banner.php";
-        include_once "./model/introduction.php";
-        include_once "./view/header.php";
-        include_once "./view/hanleShow/showDanhMuc.php";
-        include_once "./view/hanleShow/showNguonGoc.php";
-        include_once "./view/hanleShow/showSanPham.php";
-        include_once "./view/hanleShow/showAccount.php";
-        include_once "./view/hanleShow/showBanner.php";
-        include_once "./view/hanleShow/showIntroduction.php";
+    if(isset($_SESSION['roleAdmin']) && $_SESSION['roleAdmin'] == 1 && $_SESSION['isAdminLogin']) {
+        include_once "./config/include.php";
         if(isset( $_GET['page']) &&  $_GET['page']) {
             switch( $_GET['page']) {
                 case 'introduction':
@@ -41,7 +22,9 @@
                     if(isset($_POST['addIntroduction'])) {
                         $content = $_POST['introduction'];
                         $status = $_POST['status'];
-                        addNewIntroduction($content, $status);
+                        $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
+                        $date= date('Y/m/d H:i:s');
+                        addNewIntroduction($content, $status, $date);
                         header("Location: index.php?page=introduction");
                     }
                 case 'updateIntroduction':
@@ -84,7 +67,9 @@
                     if(isset($_POST['addCategory'])) {
                         $name = $_POST['nameCategory'];
                         $status = $_POST['status'];
-                        addNewCategory($name, $status);
+                        $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
+                        $date= date('Y/m/d H:i:s');
+                        addNewCategory($name, $status, $date);
                     }
                     header("Location: index.php?page=danhmuc");
                     break;
@@ -107,7 +92,10 @@
                 case 'deleteCategory':
                     if(isset($_GET['id']) && $_GET['id']) {
                         $id = $_GET['id'];
-                        deleteCategory($id);
+                        $productByCategory = getAllProductByCategory($id);
+                        if($productByCategory == 0) {
+                            deleteCategory($id);
+                        } 
                     }
                     header("Location: index.php?page=danhmuc");
                     break;
@@ -144,7 +132,9 @@
                         $name = $_POST['nameNguonGoc'];
                         $country = $_POST['country'];
                         $status = $_POST['status'];
-                        addNewNguonGoc($name, $country, $status);
+                        $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
+                        $date= date('Y/m/d H:i:s');
+                        addNewNguonGoc($name, $country, $status, $date);
                     }
                     header("Location: index.php?page=nguongoc");
                     break;
@@ -168,7 +158,10 @@
                 case 'deleteNguonGoc':
                     if(isset($_GET['id']) && $_GET['id']) {
                         $id = $_GET['id'];
-                        deleteNguonGoc($id);
+                        $productByNguonGoc = getAllProductByOrigin($id);
+                        if($productByNguonGoc == 0) {
+                            deleteNguonGoc($id);
+                        }
                     }
                     header("Location: index.php?page=nguongoc");
                     break;
@@ -222,7 +215,9 @@
                         if($uploadOk == 1) {
                             move_uploaded_file($_FILES['mainImg']["tmp_name"], $target_file);
                             $img = basename($_FILES['mainImg']["name"]);
-                            $last_id = addNewProduct($idDm,$idNG,$model,$name,$desc,$img,$status, $priority);
+                            $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
+                            $date= date('Y/m/d H:i:s');
+                            $last_id = addNewProduct($idDm,$idNG,$model,$name,$desc,$img,$status, $priority, $date);
                         }
                         // add anh mo ta
                         $filename = $_FILES['descImg']['name'];
@@ -344,9 +339,11 @@
                         $status = $_POST['status'];
                         if(getAccountByUsername($username)['username'] != "") {
                             $message = 'Tài khoản đã tồn tại';
-                            header("Location: index.php?page=account&message=" . urlencode($message));
+                            header("Location: index.php?page=account&message=".urlencode($message));
                         } else {
-                            addNewAccount($username, $email,$password,$role, $status);
+                            $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
+                            $date= date('Y/m/d H:i:s');
+                            addNewAccount($username, $email,$password,$role, $status, $date);
                             header("Location: index.php?page=account");
                         }
                     }
@@ -417,8 +414,10 @@
                         $status = $_POST['status'];
                         $priority = $_POST['priority'];
                         $imgBanner = $_FILES['imgBanner'];
+                        $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
+                        $date= date('Y/m/d H:i:s');
                         uploadImg($imgBanner);
-                        addNewBanner(basename($imgBanner["name"]),$status,$priority);
+                        addNewBanner(basename($imgBanner["name"]),$status,$priority,  $date);
                     }
                     header("Location: index.php?page=banner");
                     break;
@@ -464,8 +463,8 @@
                     }
                     break;
                 case 'logout':
-                    unset($_SESSION['roleAdmin']);
-                    unset($_SESSION['usernameAdmin']);
+                    session_unset();
+                    session_destroy();
                     header("Location: ./auth/login.php");
                     break;
                 case 'default':
@@ -475,7 +474,6 @@
                     $allAccount = getAllAccount();
                     include_once "./view/main.php";
                     break;
-                
             } 
         } else {
             $allCategory = getAllCategory();

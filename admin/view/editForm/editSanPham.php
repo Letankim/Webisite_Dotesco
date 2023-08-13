@@ -13,12 +13,11 @@
                                 <select name="danhmuc" id="danhmuc">
                                     <?php
                                         if(count($allCategory) > 0) {
-                                            echo "<option value='".$allCategory[0]['id']."'>Chọn danh mục</option>";
                                             foreach($allCategory as $category) {
                                                 if($currentProduct['idCategory'] == $category['id']) {
-                                                    echo "<option value='".$category['id']."' selected>'".$category['name']."'</option>";
+                                                    echo "<option value='".$category['id']."' selected>".$category['name']."</option>";
                                                 } else {
-                                                    echo "<option value='".$category['id']."'>'".$category['name']."'</option>";
+                                                    echo "<option value='".$category['id']."'>".$category['name']."</option>";
                                                 }
                                             }
                                         }
@@ -30,12 +29,11 @@
                                 <select name="nguonGoc" id="nguonGoc">
                                     <?php
                                         if(count($allNguonGoc) > 0) {
-                                            echo "<option value='".$allCategory[0]['id']."'>Chọn danh mục</option>";
                                             foreach($allNguonGoc as $nguonGoc) {
                                                 if($currentProduct['idOrigin'] == $nguonGoc['id']) {
-                                                    echo "<option value='".$nguonGoc['id']."' selected>'".$nguonGoc['name']."'</option>";
+                                                    echo "<option value='".$nguonGoc['id']."' selected>".$nguonGoc['name']."</option>";
                                                 } else {
-                                                    echo "<option value='".$nguonGoc['id']."'>'".$nguonGoc['name']."'</option>";
+                                                    echo "<option value='".$nguonGoc['id']."'>".$nguonGoc['name']."</option>";
                                                 }
                                             }
                                         }
