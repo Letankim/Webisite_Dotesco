@@ -11,16 +11,17 @@
             <div class='carousel-inner'>";
             $index = 0;
             foreach($banners as $banner) {
+                $img = $banner->getImg();
                 $index++;
                 if($index == 1) {
                     $bannerHtml.= "
                     <div class='carousel-item active'>
-                        <img src='".PATH_UPLOADS_IMG_USER.$banner['img']."' class='d-block w-100' alt='Slide ".($index)."'>
+                        <img src='".PATH_UPLOADS_IMG_USER.$img."' class='d-block w-100' alt='Slide ".($index)."'>
                     </div>";
                 } else {
                     $bannerHtml.= "
                     <div class='carousel-item'>
-                        <img src='".PATH_UPLOADS_IMG_USER.$banner['img']."' class='d-block w-100' alt='Slide ".($index)."'>
+                        <img src='".PATH_UPLOADS_IMG_USER.$img."' class='d-block w-100' alt='Slide ".($index)."'>
                     </div>";
                 }
             }

@@ -2,29 +2,51 @@
     ob_start();
     session_start();
     $typeUser = 1;
-    include "../model/connect.php";
-    include "../model/account.php";
-    include "../../mail/sendmail.php";
-    include "./sendForget.php";
-    $error_message = "";
+    include_once "../config/config.php";
+    include_once PATH_ROOT_ADMIN."/DAO/AccountDao.php";
+    include_once PATH_ROOT_ADMIN."/auth/sendForget.php";
+    include_once PATH_ROOT."/lib/GeneratePassword.php";
+    include_once PATH_ROOT."/mail/sendmail.php";
+    $accountDao = new AccountDao();
+    $message_forget = "";
+    $status = "error_message";
     if(isset($_POST['forgetPassword']) && $_POST['forgetPassword']) {
         $username = $_POST['username'];
         $email = $_POST['email'];
-        $account = isExistAccountForget($username, $email);
-        if($account) {
-            if($account['status'] == 0) {
-                $error_message = "Tài khoản này đang bị khóa.";
+        $account = $accountDao->isExistAccountForget($username, $email);
+        if($account !=  null) {
+            if($account->getStatus() == 0) {
+                $message_forget = "Tài khoản này đang bị khóa.";
             } else
-            if($account['role'] == 1) {
-                $newPassword = implode(resetPassword(10));
-                updatePassword($account['id'], password_hash($newPassword, PASSWORD_DEFAULT));
-                $error_message = "Cấp lại tài khoản thành công. Kiểm tra mail để xem.";
-                sendmail("Reset password admin", sendMailForgetPassword($username, $newPassword), $email, $username);
+            if($account->getRole() == 1) {
+                $newPassword = implode(generatePassword(10));
+                $isDone = $accountDao->updatePassword($account->getId(), password_hash($newPassword, PASSWORD_DEFAULT));
+                if($isDone >= 1) {
+                    $templateForget = sendMailForgetPassword($username, $newPassword);
+                    $isSendMail = sendmail("Cấp lại mật khẩu trang admin", $templateForget, $email, $username, "");
+                    $index = 0;
+                    while(!$isSendMail) {
+                        $isSendMail = sendmail("Cấp lại mật khẩu trang admin", $templateForget, $email, $username, "");
+                        $index++;
+                        if($index == 3) {
+                            $isSendMail = false;
+                            break;
+                        }
+                    }
+                    if($isSendMail) {
+                        $status = "success_message";
+                        $message_forget = "Cấp lại tài khoản thành công. Kiểm tra mail để xem.";
+                    } else {
+                        $message_forget = "Cấp lại mật khẩu thất bại vui lòng thử lại.";
+                    }
+                } else {
+                    $message_forget = "Cấp lại mật khẩu thất bại vui lòng thử lại.";
+                }
             } else {
-                $error_message = "Bạn không được phép truy cập.";
+                $message_forget = "Bạn không được phép truy cập.";
             }
         } else {
-            $error_message = 'Tên đăng nhập không tồn tại.';
+            $message_forget = 'Tên đăng nhập không tồn tại.';
         }
     }
 ?>
@@ -37,7 +59,7 @@
 Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, SonyEricsson, Motorola web design" />
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
 <!-- bootstrap-css -->
-<link rel="stylesheet" href="css/bootstrap.min.css" >
+<link rel="stylesheet" href="../assets/css/bootstrap.min.css" >
 <!-- //bootstrap-css -->
 <!-- Custom CSS -->
 <link href="../assets/css/style.css" rel='stylesheet' type='text/css' />
@@ -54,41 +76,32 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         display: block;
         width: 100%;
         text-align: center;
-        color: #a71b4b;
+        color: #ff0158;
+        font-weight: bold;
+    }
+    span.success_message {
+        display: block;
+        width: 100%;
+        text-align: center;
+        color: #01b28c;
         font-weight: bold;
     }
 </style>
-<script type='text/javascript'>
-    document.onkeydown = function(event){
-        if(event.keyCode==123){
-            return false;
-        }
-        else if(event.ctrlKey && event.shiftKey && event.keyCode==73){        
-            return false;  
-        }
-    };
-    document.oncontextmenu = new Function("return false");
-</script>
 </head>
 <body>
 <div class="log-w3">
 <div class="w3layouts-main">
 	<h2>Quên mật khẩu admin</h2>
-		<form action="#" method="post">
+		<form method="post">
 			<input type="text" class="ggg" name="username" placeholder="TÊN ĐĂNG NHẬP" required="">
 			<input type="email" class="ggg" name="email" placeholder="Email" required="">
             <div class="clearfix"></div>
             <a href="./login.php">Quay lại trang đăng nhập</a>
             <input type="submit" value="Quên mật khẩu" name="forgetPassword">
-            <span class = "error_message"><?=$error_message?></span>
+            <span class = "<?=$status?>"><?=$message_forget?></span>
 		</form>
 </div>
 </div>
 <script src="../assets/js/bootstrap.js"></script>
-<script src="../assets/js/jquery.dcjqaccordion.2.7.js"></script>
-<script src="../assets/js/scripts.js"></script>
-<script src="../assets/js/jquery.slimscroll.js"></script>
-<script src="../assets/js/jquery.nicescroll.js"></script>
-<script src="../assets/js/jquery.scrollTo.js"></script>
 </body>
 </html>

@@ -8,9 +8,7 @@
                 <h3 class="message_searching">Kết quả tìm kiếm cho "<b style="color:darkgreen"><?=$keywordSearch?></b>"</h3>
                 <?php
                     $numberOfSearch = count($searchResult);
-                    if($numberOfSearch > 0) {
                         echo "<span class='count-show'>Hiển thị ".$numberOfSearch." kết quả</span>";
-                    }
                 ?>
             </div>
             <!-- render product from database -->
@@ -22,7 +20,7 @@
                     width: 100%;
                     height: 300px;
                     object-fit: contain;
-                    margin: 0 auto;' src='".PATH_UPLOADS_IMG_USER."no-found.jpg' />";
+                    margin: 0 auto;' src='".PATH_UPLOADS_IMG_USER."no-product-found.png' />";
                 }
             ?>
         </div>
@@ -34,3 +32,4 @@
     title.innerHTML = 'Kết quả tìm kiếm cho ".$keywordSearch."';
     </script>";
 ?>
+<script src='./assets/js/validation.js'></script>

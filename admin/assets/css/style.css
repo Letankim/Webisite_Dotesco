@@ -60,6 +60,12 @@ body a:hover{
     list-style-type: none;
     padding-left: 0;
 }
+
+/* change-status-bill */
+.change-status-bill {
+    padding: 5px;
+    font-size: 20px;
+}
 /*LEFT NAVIGATION ICON*/
 .dcjq-icon {
     height:17px;
@@ -241,6 +247,7 @@ ul.sidebar-menu li a.active i {
     box-shadow:1px 0 3px rgba(0,0,0,.15);
 }
 .wrapper {
+    margin-bottom: 50px;
     display:inline-block;
     margin-top:80px;
     padding:15px;
@@ -444,7 +451,8 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
 .top-nav img {
     border-radius:50%;
     -webkit-border-radius:50%;
-    width:33px;
+    width:40px;
+    height: 40px;
 }
 .top-nav .icon-user i {
     height: 33px;
@@ -3199,4 +3207,16 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
 .chart_agile_bottom {
     padding: 0;
 }
+}
+
+#total-doanhthu {
+    display: block;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 0px;
+}
+.agileits-w3layouts-stats .stats-info.widget .stats-info-agileits{
+    max-height: 500px;
+    overflow-y: auto;
 }

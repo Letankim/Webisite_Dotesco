@@ -7,10 +7,13 @@
         margin-top: 10px;
     }
     .item-info-contact {
-        font-size: 1rem;
+        font-size: 0.7rem;
+    }
+    .item-info-contact-social {
+        display: flex;
     }
     .item-info-contact-social-link {
-        font-size: 1.3rem;
+        font-size: 0.8rem;
     }
     .logo {
         width: 70px;
@@ -18,6 +21,12 @@
     }
     .name-company h1{
         font-size: 1rem;
+    }
+    .name-company h2{
+        font-size: 0.6rem;
+    }
+    .name-company h3{
+        font-size: 0.6rem;
     }
     /* auth */
     .wrapper-auth {
@@ -32,7 +41,8 @@
     }
     .search-in-mobile {
         position: absolute;
-        top:-3px; 
+        transform: translateY(0);
+        top:5px; 
         right:10px;
     }
     /* contact */
@@ -61,6 +71,19 @@
     .box-message-search {
         display: none;
     }
+    /* preview */
+    .preview-img .box-img {
+        width: 95%;
+        height:60%;
+    }
+    /* pop up personal */
+    .box-change-information {
+        width: 95%;
+    }
+    /* sale tag */
+    .box-item-product .box-sale {
+        width: 60px;
+    }
 }
 
 @media (min-width: 576px) and (max-width: 768px) {
@@ -69,8 +92,9 @@
     }
     .search-in-mobile {
         position: absolute;
-        top:-3px; 
         right:10px;
+        transform: translateY(0);
+        top:5px; 
     }
     .pop-up {
         width: 100%;
@@ -93,13 +117,39 @@
     .box-message-search {
         display: none;
     }
+    /* sale tag */
+    .box-item-product .box-sale {
+        width: 60px;
+    }
+    .box-item-product .box-sale .content-sale {
+        font-size: 1rem;
+    }
 }
 
 @media (min-width: 769px) and (max-width: 992px) {
     .search-in-mobile {
         position: absolute;
-        top:-3px; 
+        top:5px; 
         right:10px;
+        transform: translateY(0);
+    }
+    .card-img-set-height {
+        height: 200px;
+    }
+    .name-company h1{
+        font-size: 1.5rem;
+    }
+    .name-company h2{
+        font-size: 0.8rem;
+    }
+    .name-company h3{
+        font-size: 0.8rem;
+    }
+    .box-item-product .box-sale  {
+        width: 50px;
+    }
+    .box-item-product .box-sale .content-sale {
+        font-size: 1rem;
     }
 }
 

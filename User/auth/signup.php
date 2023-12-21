@@ -1,4 +1,4 @@
-        <div class="container col-lg-9 col-12 col-sm-12 col-md-7">
+        <div style="margin-top: 10px;" class="container col-lg-9 col-12 col-sm-12 col-md-7">
             <div class="title_header">
                 <h2 class="title_content">
                     <span class = "background_main">Đăng kí</span>
@@ -6,20 +6,23 @@
             </div>
             <div class="card-group card_header_product row m-0 mt-xl-5">
                     <div class="card border-0 col-sm-12 col-md-12 col-lg-12 col-12">           
-                        <form class = "form-contact" method = "post" action="./dang-ki">
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email: (Ví dụ: abc@gmail.com) </label>
-                                <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required type="email" class="form-control" id="email"  name = "email"  placeholder="Email">
+                        <form class = "form-contact" method = "post" action="./?act=dang-ki">
+                            <div class="form-group">
+                                <label for="email-s" class="form-label">Email:  </label>
+                                <input id="email-s" required type="email" class="form-control" id="email"  name = "email"  placeholder="Email">
+                                <span class = "message_error"></span>
                             </div>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Tên đăng nhập: (Từ 5 đến 30 kí tự .Không cách.) </label>
-                                <input pattern="[0-9a-zA-Z@#$%&^]{5,30}$" required type="text" class="form-control" name = "username" placeholder="Tên đăng nhập">
+                            <div class="form-group">
+                                <label for="username-s" class="form-label">Tên đăng nhập:  </label>
+                                <input id="username-s" required type="text" class="form-control" name = "username" placeholder="Tên đăng nhập">
+                                <span class = "message_error"></span>
                             </div>
-                            <div class="mb-3">
-                                <label for="phone" class="form-label">Mật khẩu: (Từ 8 đến 30 kí tự. Không cách)</label>
-                                <input required pattern="[0-9a-zA-Z@#$%&^]{8,30}$" type="password" class="form-control" name = "password"  placeholder="Mật khẩu">
+                            <div class="form-group">
+                                <label for="password-s" class="form-label">Mật khẩu: </label>
+                                <input id="password-s" required type="password" class="form-control" name = "password"  placeholder="Mật khẩu">
+                                <span class = "message_error"></span>
                             </div>
-                            <button style="border: none; outline: none; font-size: 1.4rem; color: #fff;" type="submit" name="signup" class="background_main btn-submit-contact">Đăng kí</button>
+                            <button id="btn-sign-up" style="margin-top: 5px; border: none; outline: none; font-size: 1.4rem; color: #fff;" type="submit" name="signup" class="background_main btn-submit-contact">Đăng kí</button>
                             <span style = "font-size: 1.4rem;"><?=$message?></span>
                         </form>
                     </div>
@@ -33,3 +36,21 @@
     title.innerHTML = 'Đăng kí';
     </script>";
 ?>
+<script src='./assets/js/validation.js'></script>
+<script>
+    let regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let usernameS = document.querySelector('#username-s'),
+        passwordS = document.querySelector('#password-s'),
+        emailS = document.querySelector('#email-s'),
+        btnSubmitS = document.querySelector('#btn-sign-up');
+        const messageUsernameL = "Username phải từ 6 kí tự",
+            messagePasswordL = "Password phải từ 8 kí tự",
+            messageEmailL = "Email không hợp lệ";
+        // array to save all input to check, message show error of each and a string regex to check 
+        const inputsToValidateCheckL = [
+            { element: usernameS, message: messageUsernameL, regex: /^[a-zA-Z0-9.,!#$%&'*+/=?^_]{6,100}$/, type: "text", isEmpty: false},
+            { element: passwordS, message: messagePasswordL, regex: /^[a-zA-Z0-9.,!#$%&'*+/=?^_]{8,}$/, type: "text", isEmpty: false},
+            { element: emailS, message: messageEmailL, regex: regexEmail, type: "text", isEmpty: false}
+        ];
+        validation(inputsToValidateCheckL, btnSubmitS);
+</script>

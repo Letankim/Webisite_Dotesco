@@ -1,0 +1,100 @@
+.box-personal-information {
+    padding: 5px 0px;
+}
+.group-personal-information {
+    display: flex;
+    gap: 10px;
+    font-size: 1.5rem;
+    padding: 2px 0;
+}
+.group-personal-information label {
+    font-weight: bold;
+}
+.group-personal-information span {
+    font-style: italic;
+}
+.group-btn-call-pop-up {
+    margin-top: 5px;
+    display: flex;
+    gap: 5px;
+}
+.overlay-personal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999999;
+    transform: translateY(-100%);
+    transition: all 0.2s;
+}
+
+.overlay-personal.active {
+    transform: translateY(0%);
+}
+.box-change-information.active {
+    display: block;
+}
+
+.box-change-information {
+    padding: 30px 15px;
+    position: fixed;
+    width: 500px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgb(255 255 255);
+    z-index: 9999999999999999;
+    display: none;
+}
+
+.box-change-information h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.form-input-btn {
+    display: flex;
+    justify-content: center;
+}
+
+.btn-change-password {
+    padding: 10px;
+    font-size: 1.4rem;
+    color: var(--light-color);
+    background-color: #01b28c;
+    border: none;
+    outline: none;
+    text-align: center;
+}
+
+.btn-submit-change-information {
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+    font-size: 1.4rem;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 4px;
+}
+
+.message-status-update {
+    display: block;
+    font-size: 1.4rem;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.label.label-danger,
+.label.label-primary {
+    display: block;
+    padding: 1px 5px;
+    font-size: 1.4rem;
+    background-color: #e94e4e;
+    color: #fff;
+    border-radius: 3px;
+}
+.label.label-primary {
+    background-color: #4e82e9;
+}

@@ -18,7 +18,7 @@ const deleteBtn = document.querySelectorAll(".deleteBtn");
 if(deleteBtn) {
     deleteBtn.forEach(function(item) {
         item.addEventListener("click", function(e) {
-            let confirmDelete = confirm("Are you sure you want to delete this item?");
+            let confirmDelete = confirm("Bạn có chắc muốn xóa nó?");
             if(confirmDelete) {
                 item.parentElement.querySelector(".deleteSubmit").click();
             }
@@ -47,7 +47,18 @@ function deleteByCheck(typeDelete) {
                     isAll: false
                 }
             }).done(function (response) {
-                location.reload();
+                let currentURL = window.location.href;
+                let url = new URL(currentURL);
+                let params = new URLSearchParams(url.search);
+                let pageValue = params.get('page');
+                let queryPosition = currentURL.indexOf('?');
+                let baseURL = queryPosition !== -1 ? currentURL.slice(0, queryPosition) : currentURL;
+                if(response == "true") {
+                    window.location.href = baseURL + "?page=" + pageValue + "&status=success";
+                } else {
+                    window.location.href = baseURL + "?page=" + pageValue + "&status=fail";
+                }
+                window.reload();
             });
         }
     }
@@ -67,7 +78,18 @@ function deleteAll(typeDelete) {
                 isAll: true
             }
         }).done(function (response) {
-            location.reload();
+            let currentURL = window.location.href;
+                let url = new URL(currentURL);
+                let params = new URLSearchParams(url.search);
+                let pageValue = params.get('page');
+                let queryPosition = currentURL.indexOf('?');
+                let baseURL = queryPosition !== -1 ? currentURL.slice(0, queryPosition) : currentURL;
+                if(response == "true") {
+                    window.location.href = baseURL + "?page=" + pageValue + "&status=success";
+                } else {
+                    window.location.href = baseURL + "?page=" + pageValue + "&status=fail";
+                }
+                window.reload();
         });
     }
 }

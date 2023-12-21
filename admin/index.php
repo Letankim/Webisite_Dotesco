@@ -3,463 +3,401 @@
     ob_start();
     if(isset($_SESSION['roleAdmin']) && $_SESSION['roleAdmin'] == 1 && $_SESSION['isAdminLogin']) {
         include_once "./config/include.php";
-        if(isset( $_GET['page']) &&  $_GET['page']) {
-            switch( $_GET['page']) {
+        include_once "../lib/Time.php";
+        if((isset($_GET['page']) && $_GET['page'] != 'print-bill') || !isset($_GET['page'])) {
+            include_once PATH_ROOT_ADMIN."/view/header.php";
+        }
+        if(isset($_GET['page']) &&  $_GET['page']) {
+            switch($_GET['page']) {
+                case 'company':
+                    require_once PATH_ROOT_ADMIN."/controller/CompanyController.php";
+                    $companyController = new CompanyController();
+                    $companyController->adminCompany();
+                    break;
+                case 'add-company':
+                    if(isset($_POST['add-new'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/CompanyController.php";
+                        $companyController = new CompanyController();
+                        $companyController->adminAddNew();
+                    } else {
+                        header("Location: ?page=404");
+                    }
+                    break;
+                case 'update-company':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        require_once PATH_ROOT_ADMIN."/controller/CompanyController.php";
+                        $companyController = new CompanyController();
+                        $companyController->adminFormUpdate();
+                    }else {
+                        header("Location: ?page=404");
+                    }
+                    break;
+                case 'updated-company':
+                    if(isset($_POST['update'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/CompanyController.php";
+                        $companyController = new CompanyController();
+                        $companyController->adminUpdate();
+                    } else {
+                        header("Location: index.php?page=404");
+                    }
+                    break;
+                case 'delete-company':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        require_once PATH_ROOT_ADMIN."/controller/CompanyController.php";
+                        $companyController = new CompanyController();
+                        $companyController->adminDelete();
+                    }
+                    break;
                 case 'introduction':
-                    $allIntroduction = getAllIntroduction();
-                    $pages = ceil(count($allIntroduction) / 20);
-                    $pageNumber = 1;
-                    if(isset($_GET['trang']) && $_GET['trang']) {
-                        $pageNumber = $_GET['trang'];
-                        $page = ($pageNumber - 1) * 20;
+                    require_once PATH_ROOT_ADMIN."/controller/IntroductionController.php";
+                    $introductionController = new IntroductionController();
+                    $introductionController->adminIntroduction();
+                    break;
+                case 'add-introduction':
+                    if(isset($_POST['add-introduction'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/IntroductionController.php";
+                        $introductionController = new IntroductionController();
+                        $introductionController->adminAddNew();
                     } else {
-                        $page = 0;
+                        header("Location: ?page=404");
                     }
-                    $allIntroduction = devicePageIntroduction($page, 20);
-                    include_once "./view/introduction.php";
                     break;
-                case 'addIntroduction':
-                    if(isset($_POST['addIntroduction'])) {
-                        $content = $_POST['introduction'];
-                        $status = $_POST['status'];
-                        $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
-                        $date= date('Y/m/d H:i:s');
-                        addNewIntroduction($content, $status, $date);
-                        header("Location: index.php?page=introduction");
-                    }
-                case 'updateIntroduction':
+                case 'update-introduction':
                     if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        $currentIntroduction = getIntroductionByID($id);
-                        include_once "./view/editForm/editIntroduction.php";
-                    }
-                    break;
-                case 'updatedIntroduction':
-                    if(isset($_POST['updateIntroduction'])) {
-                        $id = $_POST['id'];
-                        $content = $_POST['introduction'];
-                        $status = $_POST['status'];
-                        updateIntroduction($id, $content, $status);
-                        header("Location: index.php?page=introduction");
-                    }
-                    break;
-                case 'deleteIntroduction':
-                    if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        deleteIntroduction($id);
-                        header("Location: index.php?page=introduction");
-                    }
-                    break;
-                case 'danhmuc':
-                    $allCategory = getAllCategory();
-                    $pages = ceil(count($allCategory) / 20);
-                    $pageNumber = 1;
-                    if(isset($_GET['trang']) && $_GET['trang']) {
-                        $pageNumber = $_GET['trang'];
-                        $page = ($pageNumber - 1) * 20;
+                        require_once PATH_ROOT_ADMIN."/controller/IntroductionController.php";
+                        $introductionController = new IntroductionController();
+                        $introductionController->adminFormUpdate();
                     } else {
-                        $page = 0;
+                        header("Location: ?page=404");
                     }
-                    $allCategory = devicePage($page, 20);
-                    include_once "./view/danhmuc.php";
                     break;
-                case 'addCategory': 
-                    if(isset($_POST['addCategory'])) {
-                        $name = $_POST['nameCategory'];
-                        $status = $_POST['status'];
-                        $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
-                        $date= date('Y/m/d H:i:s');
-                        addNewCategory($name, $status, $date);
+                case 'updated-introduction':
+                    if(isset($_POST['update-introduction'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/IntroductionController.php";
+                        $introductionController = new IntroductionController();
+                        $introductionController->adminUpdate();
+                    }else {
+                        header("Location: ?page=404");
                     }
-                    header("Location: index.php?page=danhmuc");
                     break;
-                case 'updateCategory':
+                case 'delete-introduction':
                     if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        $currentCategory = getCategoryByID($id);
-                        include_once "./view/editForm/editDanhMuc.php";
-                    }
-                    break;
-                case 'updatedCategory':
-                    if(isset($_POST['updateCategory'])) {
-                        $id = $_POST['idCategory'];
-                        $name = $_POST['nameCategory'];
-                        $status = $_POST['status'];
-                        updateCategory($id, $name, $status);
-                    }
-                    header("Location: index.php?page=danhmuc");
-                    break;
-                case 'deleteCategory':
-                    if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        $productByCategory = getAllProductByCategory($id);
-                        if($productByCategory == 0) {
-                            deleteCategory($id);
-                        } 
-                    }
-                    header("Location: index.php?page=danhmuc");
-                    break;
-                case 'searchCategory':
-                    if(isset($_POST['search'])) {
-                        $key = $_POST['key'];
-                        $status = 1;
-                        $filterCategory = searchCategory($key);
-                        include_once "./view/handleFilter/filterDanhmuc.php";
-                    }
-                    break;
-                case 'filterByCategory':
-                    if(isset($_POST['filter'])) {
-                        $status = $_POST['status'];
-                        $filterCategory = filterByCategory($status);
-                        include_once "./view/handleFilter/filterDanhmuc.php";
-                    }
-                    break;
-                case 'nguongoc':
-                    $allNguonGoc = getAllNguonGoc();
-                    $pages = ceil(count($allNguonGoc) / 20);
-                    $pageNumber = 1;
-                    if(isset($_GET['trang']) && $_GET['trang']) {
-                        $pageNumber = $_GET['trang'];
-                        $page = ($pageNumber - 1) * 20;
+                        require_once PATH_ROOT_ADMIN."/controller/IntroductionController.php";
+                        $introductionController = new IntroductionController();
+                        $introductionController->adminDelete();
                     } else {
-                        $page = 0;
+                        header("Location: ?page=404");
                     }
-                    $allNguonGoc = devicePageNguonGoc($page, 20);
-                    include_once "./view/nguongoc.php";
                     break;
-                case 'addNguonGoc':
-                    if(isset($_POST['addNguonGoc'])) {
-                        $name = $_POST['nameNguonGoc'];
-                        $country = $_POST['country'];
-                        $status = $_POST['status'];
-                        $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
-                        $date= date('Y/m/d H:i:s');
-                        addNewNguonGoc($name, $country, $status, $date);
+                case 'replyEmail':
+                    require_once PATH_ROOT_ADMIN."/controller/EmailController.php";
+                    $emailController = new EmailController();
+                    $emailController->adminEmail();
+                    break;
+                case 'add-email':
+                    if(isset($_POST['add-email'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/EmailController.php";
+                        $emailController = new EmailController();
+                        $emailController->adminAddNew();
+                    } else {
+                        header("Location: ?page=404");
                     }
-                    header("Location: index.php?page=nguongoc");
                     break;
-                case 'updateNguonGoc':
+                case 'update-reply-email':
                     if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        $currentNguonGoc = getNguonGocByID($id);
-                        include_once "./view/editForm/editNguonGoc.php";
+                        require_once PATH_ROOT_ADMIN."/controller/EmailController.php";
+                        $emailController = new EmailController();
+                        $emailController->adminFormUpdate(); 
+                    } else {
+                        header("Location: ?page=404");
                     }
                     break;
-                case 'updatedNguonGoc':
-                    if(isset($_POST['updateNguonGoc'])) {
-                        $id = $_POST['id'];
-                        $name = $_POST['nameNguonGoc'];
-                        $country = $_POST['country'];
-                        $status = $_POST['status'];
-                        updateNguonGoc($id, $name, $country,$status);
+                case 'updated-email':
+                    if(isset($_POST['update-email'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/EmailController.php";
+                        $emailController = new EmailController();
+                        $emailController->adminUpdate(); 
+                    } else {
+                        header("Location: ?page=404");
                     }
-                    header("Location: index.php?page=nguongoc");
                     break;
-                case 'deleteNguonGoc':
+                case 'delete-reply-email':
                     if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        $productByNguonGoc = getAllProductByOrigin($id);
-                        if($productByNguonGoc == 0) {
-                            deleteNguonGoc($id);
-                        }
-                    }
-                    header("Location: index.php?page=nguongoc");
-                    break;
-                case 'searchNguonGoc':
-                    if(isset($_POST['search'])) {
-                        $key = $_POST['key'];
-                        $status = 1;
-                        $filterNguonGoc = searchNguonGoc($key);
-                        include_once "./view/handleFilter/filterOrigin.php";
+                        require_once PATH_ROOT_ADMIN."/controller/EmailController.php";
+                        $emailController = new EmailController();
+                        $emailController->adminDelete(); 
+                    } else {
+                        header("Location: ?page=404");
                     }
                     break;
-                case 'filterByNguonGoc':
-                    if(isset($_POST['filter'])) {
-                        $status = $_POST['status'];
-                        $filterNguonGoc = filterByNguonGoc($status);
-                        include_once "./view/handleFilter/filterOrigin.php";
+                case 'ordered':
+                    require_once PATH_ROOT_ADMIN."/controller/BillController.php";
+                    $billController = new BillController();
+                    $billController->adminBill(); 
+                    break;
+                case 'detail-bill':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        require_once PATH_ROOT_ADMIN."/controller/BillController.php";
+                        $billController = new BillController();
+                        $billController->adminBillDetail(); 
+                    } else {
+                        header("Location: ?page=404");
+                    }
+                    break;
+                case 'update-status-bill':
+                    if(isset($_POST['update-status-bill'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/BillController.php";
+                        $billController = new BillController();
+                        $billController->adminUpdateStatus(); 
+                    } else {
+                        header("Location: index.php?page=404");
+                    }
+                    break;
+                case 'print-bill':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        require_once PATH_ROOT_ADMIN."/controller/BillController.php";
+                        $billController = new BillController();
+                        $billController->adminPrintBill(); 
+                    } else {
+                        header("Location: index.php?page=404");
+                    }
+                    break;
+                case 'delete-bill':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        require_once PATH_ROOT_ADMIN."/controller/BillController.php";
+                        $billController = new BillController();
+                        $billController->adminDelete(); 
+                    } else {
+                        header("Location: ?page=404");
+                    }
+                    break;
+                case 'category':
+                    require_once PATH_ROOT_ADMIN."/controller/CategoryController.php";
+                    $categoryController = new CategoryController();
+                    $categoryController->adminCategory();
+                    break;
+                case 'add-category': 
+                    if(isset($_POST['add-category'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/CategoryController.php";
+                        $categoryController = new CategoryController();
+                        $categoryController->adminAddNew();
+                    } else {
+                        header("Location: ?page=404");
+                    }
+                    break;
+                case 'update-category':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        require_once PATH_ROOT_ADMIN."/controller/CategoryController.php";
+                        $categoryController = new CategoryController();
+                        $categoryController->adminFormUpdate();
+                    } else {
+                        header("Location: ?page=404");
+                    }
+                    break;
+                case 'updated-category':
+                    if(isset($_POST['update-category'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/CategoryController.php";
+                        $categoryController = new CategoryController();
+                        $categoryController->adminUpdate();
+                    } else {
+                        header("Location: ?page=404");
+                    }
+                    break;
+                case 'delete-category':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        require_once PATH_ROOT_ADMIN."/controller/CategoryController.php";
+                        $categoryController = new CategoryController();
+                        $categoryController->adminDelete();
+                    } else {
+                        header("Location: ?page=404");
+                    }
+                    break;
+                case 'origin':
+                    require_once PATH_ROOT_ADMIN."/controller/OriginController.php";
+                    $originController = new OriginController();
+                    $originController->adminOrigin();
+                    break;
+                case 'add-origin':
+                    if(isset($_POST['add-origin'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/OriginController.php";
+                        $originController = new OriginController();
+                        $originController->adminAddNew();
+                    } else {
+                        header("Location: ?page=404");
+                    }
+                    break;
+                case 'update-origin':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        require_once PATH_ROOT_ADMIN."/controller/OriginController.php";
+                        $originController = new OriginController();
+                        $originController->adminFormUpdate();
+                    } else {
+                        header("Location: ?page=404");
+                    }
+                    break;
+                case 'updated-origin':
+                    if(isset($_POST['update-origin'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/OriginController.php";
+                        $originController = new OriginController();
+                        $originController->adminUpdate();
+                    } else {
+                        header("Location: ?page=404");
+                    }
+                    break;
+                case 'delete-origin':
+                    if(isset($_GET['id']) && $_GET['id']) {
+                        require_once PATH_ROOT_ADMIN."/controller/OriginController.php";
+                        $originController = new OriginController();
+                        $originController->adminDelete();
+                    } else {
+                        header("Location: ?page=404");
                     }
                     break;
                 case 'product':
-                    $allProduct = getAllProduct();
-                    $pages = ceil(count($allProduct) / 20);
-                    $pageNumber = 1;
-                    if(isset($_GET['trang']) && $_GET['trang']) {
-                        $pageNumber = $_GET['trang'];
-                        $page = ($pageNumber - 1) * 20;
+                    require_once PATH_ROOT_ADMIN."/controller/ProductController.php";
+                    $productController = new ProductController();
+                    $productController->adminProduct();
+                    break;
+                case 'add-product':
+                    if(isset($_POST['add-product'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/ProductController.php";
+                        $productController = new ProductController();
+                        $productController->adminAddNew();
                     } else {
-                        $page = 0;
-                    }
-                    $allProduct = devicePageProduct($page, 20);
-                    $allCategory = getAllCategory();
-                    $allNguonGoc = getAllNguonGoc();
-                    include_once "./view/product.php";
-                    break;
-                case 'addSanPham':
-                    if(isset($_POST['addSanPham'])) {
-                        $idDm = $_POST['danhmuc'];
-                        $idNG = $_POST['nguonGoc'];
-                        $model = $_POST['model'];
-                        $name = $_POST['name'];
-                        $desc = $_POST['desc'];
-                        $status = $_POST['status'];
-                        $priority = $_POST['priority'];
-                        $target_dir = "../uploads/";
-                        $target_file = $target_dir . basename($_FILES['mainImg']["name"]);
-                        $uploadOk = 1;
-                        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-                        if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
-                        && $imageFileType != "gif" ) {
-                            $uploadOk = 0;
-                        }
-                        if($uploadOk == 1) {
-                            move_uploaded_file($_FILES['mainImg']["tmp_name"], $target_file);
-                            $img = basename($_FILES['mainImg']["name"]);
-                            $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
-                            $date= date('Y/m/d H:i:s');
-                            $last_id = addNewProduct($idDm,$idNG,$model,$name,$desc,$img,$status, $priority, $date);
-                        }
-                        // add anh mo ta
-                        $filename = $_FILES['descImg']['name'];
-                        $filetmp = $_FILES['descImg']['tmp_name'];
-                        foreach ($filename as $key => $val)
-                        {
-                            move_uploaded_file($filetmp[$key], "../uploads/" .$val);
-                            addImgDesc($last_id, $val);
-                        }
+                        header("Location: ?page=404");
                     }
                     header("Location: index.php?page=product");
                     break;
-                case 'deleteSanPham':
+                case 'delete-product':
                     if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        $pathCurrent = getProductByID($id)['img'];
-                        unlink(PATH_UPLOADS.$pathCurrent);
-                        deletePathInFile(getAllImgDescByIDProduct($id));
-                        deleteProduct($id);
+                        require_once PATH_ROOT_ADMIN."/controller/ProductController.php";
+                        $productController = new ProductController();
+                        $productController->adminDelete();
+                    } else {
+                        header("Location: index.php?page=404");
                     }
-                    header("Location: index.php?page=product");
                     break;
-                case 'updateSanPham':
+                case 'update-product':
                     if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        $allCategory = getAllCategory();
-                        $allNguonGoc = getAllNguonGoc();
-                        $currentProduct = getProductByID($id);
-                        $allImgPreview = getAllImgDescByIDProduct($id);
-                        include_once "./view/editForm/editSanPham.php";
+                        require_once PATH_ROOT_ADMIN."/controller/ProductController.php";
+                        $productController = new ProductController();
+                        $productController->adminFormUpdate();
+                    } else {
+                        header("Location: ?page=404");
                     }
                     break;
-                case 'updatedSanPham':
-                    if(isset($_POST['updateSanPham'])) {
-                        $id = $_POST['id'];
-                        $idDm = $_POST['danhmuc'];
-                        $idNG = $_POST['nguonGoc'];
-                        $model = $_POST['model'];
-                        $name = $_POST['name'];
-                        $desc = $_POST['desc'];
-                        $status = $_POST['status'];
-                        $priority = $_POST['priority'];
-                        $mainImg = $_FILES['mainImg'];
-                        if($mainImg["name"]) {
-                            $currentPath = getProductByID($id)['img'];
-                            if(unlink(PATH_UPLOADS.$currentPath)) {
-                                echo "xoa thanh cong";
-                            }
-                            uploadImg($mainImg);
-                            $mainImg = basename($mainImg["name"]);
-                        } else {
-                            $mainImg = "";
-                        }
-                        updateProduct($idDm,$idNG,$model,$name,$desc,$mainImg,$status, $id, $priority);
-                        // add anh mo ta
-                        if($_FILES['descImg']['name'][0] != "") {
-                            deletePathInFile(getAllImgDescByIDProduct($id));
-                            deleteImgDescProduct($id);
-                            $filename = $_FILES['descImg']['name'];
-                            $filetmp = $_FILES['descImg']['tmp_name'];
-                            foreach ($filename as $key => $val)
-                            {
-                                move_uploaded_file($filetmp[$key], PATH_UPLOADS.$val);
-                                addImgDesc($id, $val);
-                            }
-                        }
+                case 'updated-product':
+                    if(isset($_POST['update-product'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/ProductController.php";
+                        $productController = new ProductController();
+                        $productController->adminUpdate();
+                    } else {
+                        header("Location: ?page=404");
                     }
-                    header("Location: index.php?page=product");
                     break;
-                case 'xemSanPhamChiTiet':
+                case 'detail-product':
                     if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        $allCategory = getAllCategory();
-                        $allNguonGoc = getAllNguonGoc();
-                        $currentProduct = getProductByID($id);
-                        $allImgPreview = getAllImgDescByIDProduct($id);
-                        include_once "./view/hanleShow/showChiTietSanPham.php";
-                    }
-                    break;
-                case 'searchSanPham':
-                    if(isset($_POST['search'])) {
-                        $key = $_POST['key'];
-                        $status = 1;
-                        $filterProduct = searchProduct($key);
-                        include_once "./view/handleFilter/filterProduct.php";
-                    }
-                    break;
-                case 'filterBySanPham':
-                    if(isset($_POST['filter'])) {
-                        $status = $_POST['status'];
-                        $priority = $_POST['priority'];
-                        $filterProduct = filterByProduct($status, $priority);
-                        include_once "./view/handleFilter/filterProduct.php";
+                        require_once PATH_ROOT_ADMIN."/controller/ProductController.php";
+                        $productController = new ProductController();
+                        $productController->adminDetailProduct();
+                    } else {
+                        header("Location: ?page=404");
                     }
                     break;
                 case 'account':
-                    $allAccount = getAllAccount();
-                    $pages = ceil(count($allAccount) / 20);
-                    $pageNumber = 1;
-                    if(isset($_GET['trang']) && $_GET['trang']) {
-                        $pageNumber = $_GET['trang'];
-                        $page = ($pageNumber - 1) * 20;
+                    require_once PATH_ROOT_ADMIN."/controller/AccountController.php";
+                    $accountController = new AccountController();
+                    $accountController->adminAccount();
+                    break;
+                case 'add-account':
+                    if(isset($_POST['add-account'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/AccountController.php";
+                        $accountController = new AccountController();
+                        $accountController->adminAddNew();
                     } else {
-                        $page = 0;
-                    }
-                    $message = "";
-                    if(isset($_GET['message']) && $_GET['message']) {
-                        $message = $_GET['message'];
-                    }
-                    $allAccount = devicePageAccount($page, 20);
-                    include_once "./view/account.php";
-                    break;
-                case 'addAccount':
-                    if(isset($_POST['addAccount'])) {
-                        $username = $_POST['username'];
-                        $email = $_POST['email'];
-                        $password = $_POST['password'];
-                        $role = $_POST['role'];
-                        $status = $_POST['status'];
-                        if(getAccountByUsername($username)['username'] != "") {
-                            $message = 'Tài khoản đã tồn tại';
-                            header("Location: index.php?page=account&message=".urlencode($message));
-                        } else {
-                            $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
-                            $date= date('Y/m/d H:i:s');
-                            addNewAccount($username, $email,$password,$role, $status, $date);
-                            header("Location: index.php?page=account");
-                        }
+                        header("Location: index.php?page=404");
                     }
                     break;
-                case "updateAccount":
+                case "update-account":
                     if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        $currentAccount = getAccountByID($id);
+                        require_once PATH_ROOT_ADMIN."/controller/AccountController.php";
+                        $accountController = new AccountController();
+                        $accountController->adminFormUpdate();
+                    } else {
+                        header("Location: index.php?page=404");
                     }
-                    include_once "./view/editForm/editFormAccount.php";
                     break;
-                case 'updatedAccount':
-                    if(isset($_POST['updateAccount'])) {
-                        $id = $_POST['id'];
-                        $password = $_POST['password'];
-                        $status = $_POST['status'];
-                        $email = $_POST['email'];
-                        $role = $_POST['role'];
-                        $currentAccount = getAccountByID($id);
-                        if($password == "") {
-                            $password = $currentAccount['password'];
-                        }
-                        updateAccount($id, $password, $email, $status, $role);
+                case 'updated-account':
+                    if(isset($_POST['update-account'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/AccountController.php";
+                        $accountController = new AccountController();
+                        $accountController->adminUpdate();
+                    } else {
+                        header("Location: ?page=404");
                     }
-                    header("Location: index.php?page=account");
                     break;
-                case 'deleteAccount':
+                case 'delete-account':
                     if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        deleteAccount($id);
-                    }
-                    header("Location: index.php?page=account");
-                    break;
-                case 'searchAccount':
-                    if(isset($_POST['search'])) {
-                        $key = $_POST['key'];
-                        $status = 1;
-                        $filterAccount = searchAccount($key);
-                        include_once "./view/handleFilter/filterAccount.php";
+                        require_once PATH_ROOT_ADMIN."/controller/AccountController.php";
+                        $accountController = new AccountController();
+                        $accountController->adminDelete();
+                    } else {
+                        header("Location:  ?page=404");
                     }
                     break;
-                case 'filterByAccount':
-                    if(isset($_POST['filter'])) {
-                        $status = $_POST['status'];
-                        $filterAccount = filterByAccount($status);
-                        include_once "./view/handleFilter/filterAccount.php";
+                case "personal":
+                    require_once PATH_ROOT_ADMIN."/controller/PersonalController.php";
+                    $personalController = new PersonalController();
+                    $personalController->adminPersonal();
+                    break;
+                case "updated-personal":
+                    if(isset($_POST['update-personal'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/PersonalController.php";
+                        $personalController = new PersonalController();
+                        $personalController->adminUpdate();
+                    } else {
+                        header("Location: ?page=404");
                     }
                     break;
                 case 'banner':
-                    $allBanner = getAllBanner();
-                    $pages = ceil(count($allBanner) / 20);
-                    $pageNumber = 1;
-                    if(isset($_GET['trang']) && $_GET['trang']) {
-                        $pageNumber = $_GET['trang'];
-                        $page = ($pageNumber - 1) * 20;
+                    require_once PATH_ROOT_ADMIN."/controller/BannerController.php";
+                    $bannerController = new BannerController();
+                    $bannerController = $bannerController->adminBanner();
+                    break;
+                case 'add-banner':
+                    if(isset($_POST['add-banner'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/BannerController.php";
+                        $bannerController = new BannerController();
+                        $bannerController = $bannerController->adminAddNew();
                     } else {
-                        $page = 0;
+                        header("Location: ?page=404");
                     }
-                    $message = "";
-                    if(isset($_GET['message']) && $_GET['message']) {
-                        $message = $_GET['message'];
-                    }
-                    $allBanner = devicePageBanner($page, 20);
-                    include_once "./view/banner.php";
                     break;
-                case 'addBanner':
-                    if(isset($_POST['addBanner'])) {
-                        $status = $_POST['status'];
-                        $priority = $_POST['priority'];
-                        $imgBanner = $_FILES['imgBanner'];
-                        $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
-                        $date= date('Y/m/d H:i:s');
-                        uploadImg($imgBanner);
-                        addNewBanner(basename($imgBanner["name"]),$status,$priority,  $date);
-                    }
-                    header("Location: index.php?page=banner");
-                    break;
-                case 'updateBanner':
+                case 'update-banner':
                     if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        $currentBanner = getBannerByID($id);
-                        include_once "./view/editForm/editBanner.php";
+                        require_once PATH_ROOT_ADMIN."/controller/BannerController.php";
+                        $bannerController = new BannerController();
+                        $bannerController = $bannerController->adminFormUpdate();
+                    } else {
+                        header("Location: ?page=404");
                     }
                     break;
-                case 'updatedBanner':
-                    if(isset($_POST['updateBanner'])) {
-                        $id = $_POST['id'];
-                        $status = $_POST['status'];
-                        $priority = $_POST['priority'];
-                        $img = "";
-                        $imgBanner = $_FILES['imgBanner'];
-                        if($imgBanner['name']) {
-                            $pathCurrent = getBannerByID($id)['img'];
-                            unlink(PATH_UPLOADS.$pathCurrent);
-                            uploadImg($imgBanner);
-                            $img = basename($imgBanner["name"]);
-                        } 
-                        updateBanner($id,$img,$status,$priority);
+                case 'updated-banner':
+                    if(isset($_POST['update-banner'])) {
+                        require_once PATH_ROOT_ADMIN."/controller/BannerController.php";
+                        $bannerController = new BannerController();
+                        $bannerController = $bannerController->adminUpdate();
+                    } else {
+                        header("Location: ?page=404");
                     }
-                    header("Location: index.php?page=banner");
                     break;
-                case 'deleteBanner':
+                case 'delete-banner':
                     if(isset($_GET['id']) && $_GET['id']) {
-                        $id = $_GET['id'];
-                        $pathCurrent = getBannerByID($id)['img'];
-                        unlink(PATH_UPLOADS.$pathCurrent);
-                        deleteBanner($id);
-                    }
-                    header("Location: index.php?page=banner");
-                    break;
-                case 'filterByBanner':
-                    if(isset($_POST['filter'])) {
-                        $status = $_POST['status'];
-                        $priority = $_POST['priority'];
-                        $filterBanner = filterByBanner($status, $priority);
-                        include "./view/handleFilter/filterBanner.php";
+                        require_once PATH_ROOT_ADMIN."/controller/BannerController.php";
+                        $bannerController = new BannerController();
+                        $bannerController = $bannerController->adminDelete();
+                    } else {
+                        header("Location: ?page=404");
                     }
                     break;
                 case 'logout':
@@ -468,21 +406,19 @@
                     header("Location: ./auth/login.php");
                     break;
                 case 'default':
-                    $allCategory = getAllCategory();
-                    $allNguonGoc = getAllNguonGoc();
-                    $allProduct = getAllProduct();
-                    $allAccount = getAllAccount();
-                    include_once "./view/main.php";
+                    require_once PATH_ROOT_ADMIN."/controller/HomeController.php";
+                    $homeController = new HomeController();
+                    $homeController->adminHome();
                     break;
             } 
         } else {
-            $allCategory = getAllCategory();
-            $allNguonGoc = getAllNguonGoc();
-            $allProduct = getAllProduct();
-            $allAccount = getAllAccount();
-            include_once "./view/main.php";
+            require_once PATH_ROOT_ADMIN."/controller/HomeController.php";
+            $homeController = new HomeController();
+            $homeController->adminHome();
         }
-        include_once "./view/footer.php";
+        if((isset($_GET['page']) && $_GET['page'] != 'print-bill') || !isset($_GET['page'])) {
+            include_once PATH_ROOT_ADMIN."/view/footer.php";
+        }
     } else {
         header("Location: ./auth/login.php");
     }

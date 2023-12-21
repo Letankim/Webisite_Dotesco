@@ -2,283 +2,161 @@
     ob_start();
     session_start();
     $typeUser = 0;
-    include_once "./define.php";
-    include_once "./mail/sendmail.php";
-    include_once "./mail/sendForget.php";
-    include_once "./mail/sendContact.php";
-    include_once "./mail/mailThank.php";
+    include_once "./config/config.php";
+    include_once "./config/include.php";
+    $categoryDao = new CategoryDao();
+    $originDao = new OriginDao();
+    $introductionDao = new IntroductionDao();
+    $companyDao = new CompanyDao();
+    $allCategoryActive = array();
+    $allOriginActive = array();
+    $categoryFooter = $categoryDao->getCategoryByNumber(6);
+    $introduction = $introductionDao->getOne();
+    $companyActive = $companyDao->getCompanyActive();   
     include_once "./User/header.php";
-    include_once "./User/model/auth.php";
-    include_once "./User/components/renameURL.php";
-    include_once "./User/model/connect.php";
-    include_once "./User/model/category.php";
-    include_once "./User/model/banner.php";
-    include_once "./User/model/product.php";
-    include_once "./User/model/origin.php";
-    include_once "./User/model/introduction.php";
-    include_once "./User/components/category.php";
-    include_once "./User/components/banner.php";
-    include_once "./User/components/product.php";
-    include_once "./User/components/productByCategory.php";
-    include_once "./User/components/pagination.php";
-    $allCategoryActive = getAllCategoryActive();
-    $allOriginActive = getAllOriginActive();
-    $introduction = getIntroduction();
+    $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
     if(isset($_GET['act']) && $_GET['act']) {
         switch($_GET['act']) {
             case 'san-pham':
-                include_once "./User/components/navigation.php";
-                $heading = "Tất cả sản phẩm";
-                $allProduct = getAllProductActive();
-                $pages = ceil(count($allProduct) / 12);
-                $pageNumber = 1;
-                if(isset($_GET['trang']) && $_GET['trang']) {
-                    $pageNumber = $_GET['trang'];
-                    $page = ($pageNumber - 1) * 12;
-                } else {
-                    $page = 0;
-                }
-                // pagination
-                $product = true;
-                $origin = false;
-                $allProduct = devicePageProduct($page, 12);
-                include_once "./User/product.php";
+                include_once PATH_ROOT_USER."/controller/ProductController.php";
+                $productController = new ProductController();
+                $productController->userProduct();
                 break;
             case 'san-pham-danh-muc':
-                include_once "./User/components/navigation.php";
-                if(isset($_GET['id']) && $_GET['id']) {
-                    $categoryID = $_GET['id'];
-                    $currentCategory = getCategoryByID($categoryID);
-                    $heading = $currentCategory['name'];
-                    if(!$currentCategory || $currentCategory['status'] != 1) {
-                        // chuyển hướng đến trang lỗi
-                        header("Location: ../../../");
-                    }
-                    $allProduct = selectAllProductByCategory($categoryID);
-                    $pages = ceil(count($allProduct) / 12);
-                    $pageNumber = 1;
-                    if(isset($_GET['trang']) && $_GET['trang']) {
-                        $pageNumber = $_GET['trang'];
-                        $page = ($pageNumber - 1) * 12;
-                    } else {
-                        $page = 0;
-                    }
-                    // pagination
-                    $product = false;
-                    $origin = false;
-                    $allProduct = selectAllProductByCategoryInPage($categoryID,$page, 12);
-                }
-                include_once "./User/product.php";
+                include_once PATH_ROOT_USER."/controller/CategoryController.php";
+                $categoryController = new CategoryController();
+                $categoryController->userProductCategory();
                 break;
             case 'san-pham-nha-san-xuat':
-                include_once "./User/components/navigation.php";
-                if(isset($_GET['id']) && $_GET['id']) {
-                    $originID = $_GET['id'];
-                    $currentOrigin = getOriginByID($originID);
-                    $heading = $currentOrigin['name'];
-                    if(!$currentOrigin || $currentOrigin['status'] != 1) {
-                        // chuyển hướng đến trang lỗi
-                        header("Location: ../../../");
-                    }
-                    $allProduct = selectAllProductByOrigin($originID);
-                    $pages = ceil(count($allProduct) / 12);
-                    $pageNumber = 1;
-                    if(isset($_GET['trang']) && $_GET['trang']) {
-                        $pageNumber = $_GET['trang'];
-                        $page = ($pageNumber - 1) * 12;
-                    } else {
-                        $page = 0;
-                    }
-                    $product = false;
-                    $origin = true;
-                    $allProduct = selectAllProductByOriginInPage($originID, $page, 12);
-                }
-                include_once "./User/product.php";
-                break;
-            case 'chi-tiet-san-pham':
-                include_once "./User/components/navigation.php";
-                if(isset($_GET['id']) && $_GET['id']) {
-                    $idProduct = $_GET['id'];
-                    $currentProduct = getProductByID($idProduct);
-                    if(!$currentProduct || $currentProduct['status'] == 0) {
-                        // chuyển hướng đến trang lỗi
-                        header("Location: ../../../");
-                    } else {
-                        updateView($idProduct);
-                        $imageDescProduct = getImageDescProduct($idProduct);
-                        $currentCategory = getCategoryByID($currentProduct['idCategory']);
-                        $currentOrigin = getOriginByID($currentProduct['idOrigin']);
-                        $productRelated=selectAllProductRelated($currentProduct['idCategory'], $idProduct);
-                    }
-                }
-                include_once "./User/itemProduct.php";
+                include_once PATH_ROOT_USER."/controller/OriginController.php";
+                $originController = new OriginController();
+                $originController->userProductOrigin();
                 break;
             case 'tim-kiem':
-                include_once "./User/components/navigation.php";
-                if (isset($_POST['keyword'])) {
-                    $keywordSearch = trim($_POST["keyword"]);
-                    $searchResult = searchProductByKeyword($keywordSearch);
-                    include_once "./User/search.php";
-                }
+                include_once PATH_ROOT_USER."/controller/ProductController.php";
+                $productController = new ProductController();
+                $productController->userSearchProduct();
+                break;
+            case 'chi-tiet-san-pham':
+                include_once PATH_ROOT_USER."/controller/DetailProductController.php";
+                $detailProductController = new DetailProductController();
+                $detailProductController->userDetailProduct();
                 break;
             case 'lien-he':
-                include_once "./User/components/navigation.php";
-                include_once "./User/contact.php";
+                include_once PATH_ROOT_USER."/controller/ContactController.php";
+                $contactController = new ContactController();
+                $contactController->userContact();
                 break;
             case 'gui-tin-nhan':
-                include_once "./User/components/navigation.php";
-                if(isset($_POST['contact'])) {
-                    $name = $_POST['name'];
-                    $email = $_POST['email'];
-                    $phone = $_POST['phone'];
-                    $message = $_POST['message'];
-                    $mailContact = sendMailContact($name, $email, $phone, $message);
-                    $mailThank = sendMailThank($name);
-                    $isSendContack = sendmail("Message from customer", $mailContact, "letankim2003@gmail.com", "LeTanKim");
-                    $isSendTank = sendmail("Thank-you letter", $mailThank, $email, $name);
-                    include_once "./User/thankyou.php";
-                }
-                break;
             case 'gui-tin-nhan-san-pham':
-                include_once "./User/components/navigation.php";
-                if(isset($_POST['contact'])) {
-                    $name = $_POST['name'];
-                    $email = $_POST['email'];
-                    $phone = $_POST['phone'];
-                    $message = $_POST['message'];
-                    $mailContact = sendMailContact($name, $email, $phone, $message);
-                    $mailThank = sendMailThank($name);
-                    $isSendContack = sendmail("Message from customer", $mailContact, "letankim2003@gmail.com", "LeTanKim");
-                    $isSendTank = sendmail("Thank-you letter", $mailThank, $email, $name);
-                    include_once "./User/thankyou.php";
-                }
+                include_once PATH_ROOT_USER."/controller/ContactController.php";
+                $contactController = new ContactController();
+                $contactController->userSendMain();
                 break;
             case 'gioi-thieu':
-                include_once "./User/components/navigation.php";
-                include_once "./User/introduction.php";
+                include_once PATH_ROOT_USER."/controller/IntroductionController.php";
+                $introductionController = new IntroductionController();
+                $introductionController->userIntroduction();
                 break;
             case 'dang-nhap':
-                include_once "./User/components/navigation.php";
-                $message = "";
-                if(isset ($_POST ['login'])) {
-                    $username = trim($_POST ["username"]);
-                    $password = trim($_POST ["password"]);
-                    $user = isExistAccount($username);
-                    if($user) {
-                        if($user['role'] == 0) {
-                            $isValidPassword = password_verify($password, $user['password']);
-                            if($user['status'] == 0) {
-                                $message = "Tài khoản này đang bị khóa.";
-                                include_once "./User/auth/login.php";
-                            } else
-                            if($isValidPassword) {
-                                $_SESSION["isLogin"] = true;
-                                $_SESSION["username"] = $user['username'];
-                                $_SESSION["idUser"] = $user['id'];
-                                $_SESSION["emailUser"] = $user['email'];
-                                $_SESSION["roleLogin"] = 0;
-                                header("Location: .");
-                            } else {
-                                $message = "Mật khẩu không chính xác.";
-                                include_once "./User/auth/login.php";
-                            }
-                        } else {
-                            $message = "Hãy sử dụng form đăng nhập với vai trò được cung cấp.";
-                            include_once "./User/auth/login.php";
-                        }
-                    } else {
-                        $message = "Tài khoản không tồn tại.";
-                        include_once "./User/auth/login.php";
-                    } 
-                }
-                else {
-                    include_once "./User/auth/login.php";
-                }
+                include_once PATH_ROOT_USER."/controller/AuthController.php";
+                $authController = new AuthController();
+                $authController->login();
                 break;
             case 'dang-ki':
-                include_once "./User/components/navigation.php";
-                $message = "";
-                if(isset($_POST['signup'])) {
-                    $username = $_POST['username'];
-                    $password = $_POST['password'];
-                    $email = $_POST['email'];
-                    $user = isExistAccount($username);
-                    if($user) {
-                        $message = "Tên đăng nhập đã tồn tại.";
-                    } else {
-                        $zone_Asia_Ho_Chi_Minh = date_default_timezone_set('Asia/Ho_Chi_Minh');
-                        $date= date('Y/m/d H:i:s');
-                        addAccount($username, $email,password_hash($password, PASSWORD_DEFAULT), $date);
-                        $message = "Đăng kí tài khoản thành công.";
-                    }
-                } 
-                include_once "./User/auth/signup.php";
+                include_once PATH_ROOT_USER."/controller/AuthController.php";
+                $authController = new AuthController();
+                $authController->signup();
                 break;
             case 'quen-mat-khau':
-                include_once "./User/components/navigation.php";
-                $message = "";
-                if(isset($_POST['forget'])) {
-                    $username = $_POST['username'];
-                    $email = $_POST['email'];
-                    $user = isExistAccountForget($username,$email);
-                    if($user) { 
-                        if($user['status'] == 0) {
-                            $message = "Tài khoản này đang bị khóa.";
-                        } else if($user['role'] == 1) {
-                            $message = "Tài khoản này không được phép cấp lại mật khẩu ở đây.";
-                        } else {
-                            $newPassword =  implode(resetPassword(9));
-                            $isSend = sendmail("Reset password", sendMailForgetPassword($username,$newPassword), $email, $username);
-                            if($isSend) {
-                                updatePassword($user['id'], password_hash($newPassword, PASSWORD_DEFAULT));
-                                $message = "Cấp lại mật khẩu thành công. Kiểm tra mail để lấy mật khẩu mới.";
-                            } else {
-                                $message = "Chưa cấp lại mật khẩu thành công.";
-                            }
-                        }
-                    } else {
-                        $message = "Tài khoản không tồn tại.";
-                    }
-                }
-                include_once "./User/auth/forget.php";
+                include_once PATH_ROOT_USER."/controller/AuthController.php";
+                $authController = new AuthController();
+                $authController->forget();
+                break;
+            case 'don-hang':
+                include_once PATH_ROOT_USER."/controller/OrderController.php";
+                $orderController = new OrderController();
+                if(isset($_GET['isCart']) && $_GET['isCart'] == 'true') {
+                    $orderController->orderByCart();
+                } else if(isset($_GET['isCart']) && $_GET['isCart'] != 'true'){
+                    header("Location: ?act=404");
+                } else{
+                    $orderController->orderBuyNow();
+                }         
+                break;
+            case 'gio-hang':
+                include_once PATH_ROOT_USER."/controller/CartController.php";
+                $cartController = new CartController();
+                $cartController->userCart();
+                break;
+            case 'them-gio-hang':
+                include_once PATH_ROOT_USER."/controller/CartController.php";
+                $cartController = new CartController();
+                $cartController->addToCart();
+                break;
+            case 'deleteItemCart':
+                include_once PATH_ROOT_USER."/controller/CartController.php";
+                $cartController = new CartController();
+                $cartController->deleteItemCart();
+                break;
+            case 'xoa-gio-hang':
+                include_once PATH_ROOT_USER."/controller/CartController.php";
+                $cartController = new CartController();
+                $cartController->deleteAllCart();
+                break;
+            case 'xac-nhan-dat-hang':
+                include_once PATH_ROOT_USER."/controller/OrderController.php";
+                $orderController = new OrderController();
+                $orderController->order();
+                break;
+            case "order-status-vnpay":
+                include_once PATH_ROOT_USER."/controller/OrderController.php";
+                $orderController = new OrderController();
+                $orderController->orderNowWithVnPay();
+                break;
+            case "order-success":
+                include_once PATH_ROOT_USER."/controller/OrderController.php";
+                $orderController = new OrderController();
+                $orderController->orderStatus("success");
+                break;
+            case "order-fail":
+                include_once PATH_ROOT_USER."/controller/OrderController.php";
+                $orderController = new OrderController();
+                $orderController->orderStatus("fail");
                 break;
             case 'ca-nhan':
-                include_once "./User/components/navigation.php";
-                $message = "";
-                if(isset($_POST['changePassword'])) {
-                    $id = $_SESSION["idUser"];
-                    $oldPasseword = $_POST['password'];
-                    $newPassword = $_POST['newPassword'];
-                    $currentUser = getUserById($id);
-                    $isValidPassword = password_verify($oldPasseword, $currentUser['password']);
-                    if($isValidPassword) {
-                        updatePassword($id, password_hash($newPassword, PASSWORD_DEFAULT));
-                        $message = "Cập nhật mật khẩu thành công";
-                    } else {
-                        $message = "Mật khẩu cũ không hợp lệ";
-                    }
-                }
-                include_once "./User/personal.php";
+                include_once PATH_ROOT_USER."/controller/PersonalController.php";
+                $personalController  = new PersonalController();
+                $personalController->userPersonal();
+                break;
+            case "xem-chi-tiet-don-hang":
+                include_once PATH_ROOT_USER."/controller/PersonalController.php";
+                $personalController  = new PersonalController();
+                $personalController->detailBill();
+                break;
+            case "404":
+                include_once PATH_ROOT_USER."/controller/ErrorController.php";
+                $errorController = new ErrorController();
+                $errorController->error404();
                 break;
             case "dang-xuat":
-                session_unset();
-                session_destroy();
+                unset($_SESSION["isLogin"]);
+                unset($_SESSION["username"]);
+                unset($_SESSION["idUser"]);
+                unset($_SESSION["emailUser"] );
+                unset($_SESSION["roleLogin"]);
                 header("Location: .");
                 break;
             default:
-                $allBannerActive = getAllBannerActive();
-                $allProductActive = getAllProductActiveHome();
-                $allProductFeatured = getAllProductActiveFeatured();
-                $categoryLimit = getCategoryNewLimit(6);
-                include './User/main.php';
+                include_once PATH_ROOT_USER."/controller/HomeController.php";
+                $homeController  = new HomeController();
+                $homeController->userHome();
                 break;
         }
     } else {
-        $allBannerActive = getAllBannerActive();
-        $allProductActive = getAllProductActiveHome();
-        $allProductFeatured = getAllProductActiveFeatured();
-        $categoryLimit = getCategoryNewLimit(6);
-        include './User/main.php';
+        include_once PATH_ROOT_USER."/controller/HomeController.php";
+        $homeController  = new HomeController();
+        $homeController->userHome();
     }
-    include_once "./User/footer.php";
+    include_once  PATH_ROOT_USER."/footer.php";
 ?>

@@ -1,3 +1,9 @@
+<?php
+    $id = $currentBanner->getId();
+    $img = $currentBanner->getImg();
+    $status = $currentBanner->getStatus();
+    $priority = $currentBanner->getPriority();
+?>
 <section id="main-content">
 	<section class="wrapper">
 		<div class="table-agile-info">
@@ -7,18 +13,22 @@
                         Chỉnh sửa banner
                     </div>
                     <div class="position-center">
-                        <form enctype="multipart/form-data" method = "post" action = "index.php?page=updatedBanner" role="form">
+                        <form enctype="multipart/form-data" method = "post" action = "index.php?page=updated-banner" role="form">
                             <div class="form-group">
                                 <label for="imgBanner">Ảnh đại diện: </label>
-                                <input type="file" id="imgBanner" name="imgBanner" class="form-control">
-                                <input type="hidden" name="id" value="<?=$currentBanner['id']?>">
-                                <img style="width: 80px; margin-top: 5px" src="<?=PATH_UPLOADS.$currentBanner['img']?>" alt="">
+                                <input type="file" id="imgBanner" name="imgBanner" class="form-control" onchange="previewImage(event, '.box-img-preview')">
+                                <input type="hidden" name="id" value="<?=$id?>">
+                                <input type="hidden" name="oldBanner" value="<?=$img?>">
+                                <span class = 'message_error'></span>
+                                <div class="box-img-preview">
+                                    <img src="<?=PATH_UPLOADS.$img?>" alt="Banner">
+                                </div> 
                             </div>
                             <div class="form-group">
                                 <label for="priority">Ưu tiên: </label>
                                 <select name="priority" id="priority">
                                     <?php
-                                        if($currentBanner['priority'] == 1) {
+                                        if($priority == 1) {
                                             echo "<option value='0'>Bình thường</option>
                                             <option value='1' selected>Ưu tiên</option>";
                                         } else  {
@@ -32,7 +42,7 @@
                                 <label for="status">Status: </label>
                                     <select name="status" id="status">
                                         <?php
-                                            if($currentBanner['status'] == 1) {
+                                            if($status == 1) {
                                                 echo "<option value='0'>Không hoạt động</option>
                                                 <option value='1' selected>Hoạt động</option>";
                                             } else  {
@@ -42,7 +52,7 @@
                                         ?>
                                     </select>
                             </div>
-                            <button type="submit" name = "updateBanner" class="btn btn-info">Chỉnh sửa</button>
+                            <button type="submit" id="update-information" name = "update-banner" class="btn btn-info">Lưu</button>
                         </form>
                     </div>
                 </div>
@@ -52,3 +62,14 @@
 </section>
 <!--main content end-->
 </section>
+<script src='./assets/js/validation.js'></script>
+<script>
+    let img = document.querySelector('#imgBanner'),
+        btnSubmit = document.querySelector('#update-information');
+        const messageImg = "Hãy chọn ảnh hợp lệ";
+        // array to save all input to check, message show error of each and a string regex to check 
+        const inputsToValidateCheck = [
+            { element: img, message: messageImg, regex: null, type: "image", isEmpty: false },
+        ];
+        validation(inputsToValidateCheck, btnSubmit);
+</script>

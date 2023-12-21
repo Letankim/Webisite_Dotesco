@@ -50,9 +50,6 @@
             <p class='content'>
                 Nội dung tin nhắn: ".$message."
             </p>
-            <p class='say-something'>Hãy trả lời khách hàng</p>
-            </div>
-            <span class='sendby'>Được gửi bởi ".$name."</span>
         </body>
         </html>";
         return $mailContact;

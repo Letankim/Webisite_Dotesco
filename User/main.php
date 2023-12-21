@@ -10,7 +10,7 @@
                 </div>
             </div>
             <!-- render from database -->
-            <?=showCategory($allCategoryActive)?>
+            <?=showCategoryInMain($allCategoryActive)?>
         </div>
         <div style="margin-top: 10px" id="carouselExampleIndicators" class="carousel slide banner_main col-lg-9 col-12 col-sm-12 col-md-7" data-bs-ride="carousel">
             <!-- render banner -->
@@ -30,7 +30,7 @@
 <section class="favorite_product container">
     <div class="title_header">
         <h2 class="title_content">
-            <span class = "background_main"> SẢN PHẨM NỖI BẬT</span>
+            <span class = "background_main"> SẢN PHẨM NỔI BẬT</span>
         </h2>
     </div>
     <!-- render product -->
@@ -50,3 +50,4 @@
         <?=showProductCategoryLimit($categoryLimit)?>
     </div>
 </section>
+<script src='./assets/js/validation.js'></script>

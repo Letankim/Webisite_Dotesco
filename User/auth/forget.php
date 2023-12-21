@@ -6,16 +6,18 @@
             </div>
             <div class="card-group card_header_product row m-0 mt-xl-5">
                     <div class="card border-0 col-sm-12 col-md-12 col-lg-12 col-12">           
-                        <form class = "form-contact" method = "post" action="./quen-mat-khau">
-                            <div class="mb-3">
-                                <label for="email" class="form-label">Email: (Ví dụ: abc@gmail.com) </label>
-                                <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" required type="email" class="form-control" id="email"  name = "email"  placeholder="Email">
+                        <form class = "form-contact" method = "post" action="./?act=quen-mat-khau">
+                            <div class="form-group">
+                                <label for="email-f" class="form-label">Email:  </label>
+                                <input id="email-f" required type="email" class="form-control" id="email"  name = "email"  placeholder="Email">
+                                <span class = "message_error"></span>
                             </div>
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Tên đăng nhập: (Từ 5 đến 30 kí tự .Không cách.) </label>
-                                <input pattern="[a-zA-Z.@#$%&^*()]{5,30}" required type="text" class="form-control" name = "username" placeholder="Tên đăng nhập">
+                            <div class="form-group">
+                                <label for="username-f" class="form-label">Tên đăng nhập:  </label>
+                                <input id="username-f" required type="text" class="form-control" name = "username" placeholder="Tên đăng nhập">
+                                <span class = "message_error"></span>
                             </div>
-                            <button style="border: none; outline: none; font-size: 1.4rem; color: #fff;" type="submit" name="forget" class="background_main btn-submit-contact">Cấp lại mật khẩu</button>
+                            <button id="btn-forget" style="margin-top: 5px;border: none; outline: none; font-size: 1.4rem; color: #fff;" type="submit" name="forget" class="background_main btn-submit-contact">Cấp lại mật khẩu</button>
                             <span style = "font-size: 1.4rem;"><?=$message?></span>
                         </form>
                     </div>
@@ -29,3 +31,18 @@
     title.innerHTML = 'Quên mật khẩu';
     </script>";
 ?>
+<script src='./assets/js/validation.js'></script>
+<script>
+    let regexEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    let usernameF = document.querySelector('#username-f'),
+        emailF = document.querySelector('#email-f'),
+        btnSubmitF = document.querySelector('#btn-forget');
+        const messageUsernameF = "Username phải từ 6 kí tự",
+            messageEmailF = "Email không hợp lệ";
+        // array to save all input to check, message show error of each and a string regex to check 
+        const inputsToValidateCheckF = [
+            { element: usernameF, message: messageUsernameF, regex: /^[a-zA-Z0-9.,!#$%&'*+/=?^_]{6,100}$/, type: "text", isEmpty: false},
+            { element: emailF, message: messageEmailF, regex: regexEmail, type: "text", isEmpty: false}
+        ];
+        validation(inputsToValidateCheckF, btnSubmitF);
+</script>

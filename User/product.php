@@ -31,6 +31,7 @@
 <?php
     echo "<script>
     const title = document.querySelector('title');
-    title.innerHTML = 'Xem - ".$heading."';
+    title.innerHTML = '".$heading."';
     </script>";
 ?>
+<script src='./assets/js/validation.js'></script>
